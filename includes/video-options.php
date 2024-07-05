@@ -23,6 +23,7 @@ class Gumlet_Video_Settings
         $this->options = get_option('gumlet_video_settings', []);
         add_action('admin_init', [ $this, 'gumlet_register_settings' ]);
         add_action('admin_menu', [ $this, 'gumlet_add_options_link' ]);
+
     }
 
     /**
@@ -50,18 +51,14 @@ class Gumlet_Video_Settings
         </head> -->
         <div class="wrap">
     <h1>
-        <img src="<?php echo plugins_url('assets/images/gumlet-logo.png', __DIR__); ?>" alt="gumlet Logo"
+        <img src="<?php echo plugins_url('includes/assets/images/gumlet-logo.png', __DIR__); ?>" alt="gumlet Logo"
             style="width:200px; margin-left: -12px;">
     </h1>
-    <?php
-            if( isset($_GET['settings-updated']) ){
-          ?>
+    <!-- <?php if( isset($_GET['settings-updated']) ) { ?>
     <div class="notice notice-warning">
         <p><strong>Heads up! Clear cache:</strong> We recommend you clear cache after enabling Gumlet.</p>
     </div>
-    <?php
-            }
-          ?>
+    <?php } ?> -->
     <!-- <div class="notice notice-info">
         <p><strong>Important!</strong> Gumlet <strong>does not</strong> work well with other lazy-load plugins. We
             recommend you <strong>disable</strong> all other lazy-load plugins and lazy-load settings in themes.</p>
@@ -74,8 +71,39 @@ class Gumlet_Video_Settings
 
         <?php settings_fields('gumlet_video_settings_group'); ?>
         <div class="mytabs">
-            <input type="radio" id="tabsettings" name="mytabs" checked="checked">
-            <label for="tabsettings" class="mytablabel">Settings</label>
+            <input type="radio" id="tabBasic" name="mytabs" checked="checked">
+            <label for="tabBasic" class="mytablabel">Basic</label>
+            <div class="tab">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <th>
+                                <label class="description" for="gumlet_min_width">
+                                    <?php esc_html_e('Width', 'gumlet'); ?>
+                                </label>
+                            </th>
+                            <td>
+                                <input id="gumlet_min_width" type="number" name="gumlet_min_width" min="0" max="1920" value="<?php echo get_option('gumlet_min_width'); ?>" />
+                                <p style="color: #666">If set, this will be minimum width for video player.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label class="description" for="gumlet_default_cc_enabled">
+                                    <?php esc_html_e('Show Subtitles automatically', 'gumlet'); ?>
+                                </label>
+                            </th>
+                            <td>
+                                <input id="gumlet_default_cc_enabled" type="checkbox" name="gumlet_default_cc_enabled" value="1"
+                                    <?php checked(get_option('gumlet_default_cc_enabled')) ?> />
+                                <p style="color: #666">If this is enabled, the videos having subtitles will show it by default.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <input type="radio" id="tabAdvanced" name="mytabs">
+            <label for="tabAdvanced" class="mytablabel">Settings</label>
             <div class="tab">
                 <table class="form-table">
                     <tbody>
@@ -87,7 +115,7 @@ class Gumlet_Video_Settings
                             </th>
                             <td>
                                 <input id="gumlet_video_settings[api_key]" type="password" name="gumlet_video_settings[api_key]"
-                                    placeholder="******"
+                                    placeholder="******************"
                                     value="<?php echo $this->get_option('api_key'); ?>" required="required"
                                     class="regular-text code" />
                                 <p style="color: #666">&nbsp;Get the API key from <a href="https://dashboard.gumlet.com/user/apikey" target="_blank">https://dashboard.gumlet.com/user/apikey</a></p>
@@ -146,106 +174,7 @@ class Gumlet_Video_Settings
                 hideShowOptions(dynamicElem)
             </script>
             </div>
-            <input type="radio" id="tabadvanced" name="mytabs">
-            <label for="tabadvanced" class="mytablabel">Advanced</label>
-            <div class="tab">
-                <table class="form-table">
-                    <tbody>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_video_settings[original_images]">
-                                    <?php esc_html_e('Use Original Images', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <input id="gumlet_video_settings[original_images]" type="checkbox"
-                                    name="gumlet_video_settings[original_images]" value="1" <?php
-                                    checked($this->get_option('original_images')) ?> />
-                                <p style="color: #666">If this is enabled (recommended), plugin will use original images
-                                    before processing. <br>If this is not enabled, Gumlet will use images resized by
-                                    wordpress for further processing.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_video_settings[server_webp]">
-                                    <?php esc_html_e('Browser Webp Detect', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <input id="gumlet_video_settings[server_webp]" type="checkbox"
-                                    name="gumlet_video_settings[server_webp]" value="1" <?php
-                                    checked($this->get_option('server_webp')) ?> />
-                                <p style="color: #666">If this is enabled, plugin will detect Webp support from browser
-                                    rather than from server.(recommended OFF)</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_width_from_img">
-                                    <?php esc_html_e('Use <img> Width', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <input id="gumlet_width_from_img" type="checkbox" name="gumlet_width_from_img" value="1"
-                                    <?php checked(get_option('gumlet_width_from_img')) ?> />
-                                <p style="color: #666">If this is enabled, plugin will use width from &lt;img&gt;
-                                    element width attribute rather than calculating actual width.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_width_from_flex">
-                                    <?php esc_html_e('Use Flex Width', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <input id="gumlet_width_from_flex" type="checkbox" name="gumlet_width_from_flex" value="1"
-                                    <?php checked(get_option('gumlet_width_from_flex')) ?> />
-                                <p style="color: #666">If this is enabled, plugin will use width from Flex CSS propery rather than calculating actual width.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_min_width">
-                                    <?php esc_html_e('Minimum Width', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <input id="gumlet_min_width" type="number" name="gumlet_min_width" min="0" max="5000" value="<?php echo get_option('gumlet_min_width'); ?>" />
-                                <p style="color: #666">If set, this will be minimum pixel width for image serving.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_video_settings[exclude_images]">
-                                    <?php esc_html_e('Exclude Image URLs', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <textarea id="gumlet_video_settings[exclude_images]" style="width: 500px; height: 100px"
-                                    placeholder="Enter every URL in new line."
-                                    name="gumlet_video_settings[exclude_images]"><?php print($this->get_option('exclude_images')) ?></textarea>
-                                <p style="color: #666">The URLs you enter here will not be processed by Gumlet. Please
-                                    enter one URL per line.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label class="description" for="gumlet_video_settings[exclude_post_types]">
-                                    <?php esc_html_e('Exclude Post Types', 'gumlet'); ?>
-                                </label>
-                            </th>
-                            <td>
-                                <textarea id="gumlet_video_settings[exclude_post_types]" style="width: 500px; height: 100px"
-                                    placeholder="Enter each post type in new line."
-                                    name="gumlet_video_settings[exclude_post_types]"><?php print($this->get_option('exclude_post_types')) ?></textarea>
-                                <p style="color: #666">Enter post types here to exclude those posts from being processed with Gumlet.</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            
         </div>
         <input type="submit" class="button-primary" value="<?php esc_html_e('Save Options', 'gumlet'); ?>" />
         <style>
@@ -306,9 +235,8 @@ class Gumlet_Video_Settings
     public function gumlet_register_settings()
     {
         register_setting('gumlet_video_settings_group', 'gumlet_video_settings');
-        register_setting('gumlet_video_settings_group', 'gumlet_width_from_img', ["type"=> 'boolean', "default"=>true]);
-        register_setting('gumlet_video_settings_group', 'gumlet_width_from_flex', ["type"=> 'boolean', "default"=>false]);
-        register_setting('gumlet_video_settings_group', 'gumlet_min_width', ["type"=> 'intrger']);
+        register_setting('gumlet_video_settings_group', 'gumlet_default_cc_enabled', ["type"=> 'boolean', "default"=>true]);
+        register_setting('gumlet_video_settings_group', 'gumlet_min_width', ["type"=> 'integer']);
     }
 
     /**
