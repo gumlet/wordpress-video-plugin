@@ -169,7 +169,7 @@ class Gumlet_Video_Settings
      */
     public function gumlet_add_options_link()
     {
-        add_options_page('Gumlet', 'Gumlet', 'manage_options', 'gumlet-video-options', [ $this, 'gumlet_options_page' ]);
+        add_options_page('Gumlet', 'Gumlet Video', 'manage_options', 'gumlet-video-options', [ $this, 'gumlet_options_page' ]);
     }
 
     /**
