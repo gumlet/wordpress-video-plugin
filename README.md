@@ -1,7 +1,8 @@
 # Gumlet Wordpress Video Plugin
-Gumlet WordPress Video Plugin
+===============================
 
-=== Plugin Name ===
+Plugin Name
+-----------
 Contributors: akbansa
 Tags: video embed, dymanic watermarking, content security
 Requires at least: 4.7
@@ -13,7 +14,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 An official plugin by Gumlet for video embedding, dynamic watermark configuration and shortcode.
 
-== Description ==
+Description
+-----------
 
 > **The plugin offers dynamic watermarking, player customisation and embed shortcode for Gumlet videos**
 >
@@ -26,7 +28,8 @@ An official plugin by Gumlet for video embedding, dynamic watermark configuratio
 This is the plugin you ever need for securing videos!
 
 
-== Installation Guide for Dynamic Watermark ==
+Installation Guide for Dynamic Watermark
+----------------------------------------
 
 1. Enable the dymanic watermark and set the visual configuration in the player settings options on Video CMS. Visit [https://dashboard.gumlet.com/video/manage?tab=edit_player](https://dashboard.gumlet.com/video/manage?tab=edit_player)
 
@@ -40,7 +43,8 @@ This is the plugin you ever need for securing videos!
 
 
 
-= Get in touch! =
+Get in touch!
+-------------
 
 Still not sure? Come chat with us, we will honestly help you make the right choice.
 
@@ -51,7 +55,8 @@ Still not sure? Come chat with us, we will honestly help you make the right choi
 
 
 
-== Frequently Asked Questions ==
+Frequently Asked Questions
+--------------------------
 
 = Can I use email and name in the dynamic watermark? =
 
@@ -60,10 +65,3 @@ Yes, you can use name, email and user_id in a combination as per your need.
 = Is it free to use? =
 
 Gumlet Video plugin is free to use. However, to use the dynamic watermark on your videos, you would need a Business plan. Learn more about plans [here](https://www.gumlet.com/pricing/?tab=video)
-
-== Changelog ==
-
-= 1.0 =
-* First plugin version
-* Shortcode to Embed Gumlet video
-* Support for configuring dynamic watermarking parameters
