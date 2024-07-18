@@ -47,10 +47,10 @@ Still not sure? Come chat with us, we will honestly help you make the right choi
 Frequently Asked Questions
 --------------------------
 
-= Can I use email and name in the dynamic watermark? =
+> **Can I use email and name in the dynamic watermark?**
 
-Yes, you can use name, email and user_id in a combination as per your need.
+> * Yes, you can use name, email and user_id in a combination as per your need.
 
-= Is it free to use? =
+> **Is it free to use?**
 
-Gumlet Video plugin is free to use. However, to use the dynamic watermark on your videos, you would need a Business plan. Learn more about plans [here](https://www.gumlet.com/pricing/?tab=video)
+> * Gumlet Video plugin is free to use. However, to use the dynamic watermark on your videos, you would need a Business plan. Learn more about plans [here](https://www.gumlet.com/pricing/?tab=video)
