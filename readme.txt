@@ -23,6 +23,13 @@ An official plugin by Gumlet for video embedding, dynamic watermark configuratio
 This is the plugin you ever need for securing videos!
 
 
+== Screenshots ==
+
+1. WordPress settings panel
+2. Gumlet Player customisation panel
+3. How does it work?
+4. Shortcode usage
+
 == Installation Guide for Dynamic Watermark ==
 
 1. Enable the dymanic watermark and set the visual configuration in the player settings options on Video CMS. Visit [https://dashboard.gumlet.com/video/manage?tab=edit_player](https://dashboard.gumlet.com/video/manage?tab=edit_player)
