@@ -1,4 +1,4 @@
-=== Gumlet Video Plugin ===
+=== Gumlet Video ===
 
 Contributors: adityapatadia
 Tags: video embed, dymanic watermarking, content security
