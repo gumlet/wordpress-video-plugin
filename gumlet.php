@@ -6,7 +6,6 @@
  * @license BSD-2
  * 
  * Plugin Name: Gumlet Video
- * Plugin URI: https://www.gumlet.com
  * Description: Video Hosting Plugin for WordPress
  * Version: 1.0
  * Author: Gumlet
