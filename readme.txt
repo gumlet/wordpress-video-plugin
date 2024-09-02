@@ -1,12 +1,15 @@
-=== Plugin Name ===
-Contributors: akbansa
+=== Gumlet Video Plugin ===
+
+Contributors: adityapatadia
 Tags: video embed, dymanic watermarking, content security
+Text Domain: gumlet
+Author URI: https://www.gumlet.com
 Requires at least: 4.7
 Tested up to: 6.6
 Stable tag: 1.0
 Requires PHP: 7.0
 License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License URI: http://opensource.org/licenses/BSD-2-Clause
 
 An official plugin by Gumlet for video embedding, dynamic watermark configuration and shortcode.
 
