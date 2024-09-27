@@ -62,7 +62,7 @@ function gumlet_video_shortcode($atts)
         }
     }
    
-    $uniq = 'u' . rand();
+    $uniq = 'u' . wp_rand();
     $url = "https://play.gumlet.io/embed/$video?";
     if ($sc_args['autoplay']) {
         $url .= "autoplay=true&";

@@ -138,7 +138,7 @@ class Gumlet_Video_Settings
     }
 
     public function load_plugin_script_files(){
-        wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false);
+        wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false, '1.0.1');
         wp_enqueue_style('admin_tabs');
     }
     
