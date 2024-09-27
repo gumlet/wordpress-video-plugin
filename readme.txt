@@ -22,7 +22,7 @@ An official plugin by Gumlet for video embedding, dynamic watermark configuratio
 > * Use shortcode to embed videos quickly
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
-> * Gumlet uses play.gumlet.io domain for data transfer. This domain is owned by https://www.gumlet.com
+> * Gumlet uses play.gumlet.io domain for data transfer. This domain is owned by https://www.gumlet.com. Read [Privacy Policy](https://www.gumlet.com/privacy/) and [Terms of Service](https://www.gumlet.com/terms/)
 
 This is the plugin you will ever need for securing videos!
 
