@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Version:           1.0
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
+ * Text Domain:       gumlet-video
  * License:           GPLv2
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
