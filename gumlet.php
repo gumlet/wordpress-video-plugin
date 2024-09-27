@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 
 
-include('includes/logger.php');
 include('includes/video-options.php');
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
