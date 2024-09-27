@@ -1,30 +1,18 @@
 <?php
-/**
- * 
- * @package gumlet-wordpress-video
- * @author akbansa
- * @license BSD-2
- * 
- * Plugin Name: Gumlet Video
- * Description: Video Hosting Plugin for WordPress
- * Version: 1.0
- * Author: Gumlet
- * Author URI: https://www.gumlet.com
- * License: BSD-2
+ /*
+ * Plugin Name:       Gumlet Video
+ * Description:       Video Hosting Plugin for WordPress
+ * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
+ * Version:           1.0
+ * Author:            Gumlet
+ * Author URI:        https://www.gumlet.com
+ * License:           GPLv2
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 
 include('includes/logger.php');
 include('includes/video-options.php');
-
-if (!defined('GUMLET_VIDEO_DEBUG')) {
-    define('GUMLET_VIDEO_DEBUG', isset($_GET['GUMLET_VIDEO_DEBUG']) ? $_GET['GUMLET_VIDEO_DEBUG'] : false);
-}
-
-if (GUMLET_VIDEO_DEBUG) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-}
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
     define('GUMLET_PLUGIN_VERSION', '1.0');
