@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Gumlet_Video_Settings
 {
@@ -48,10 +49,10 @@ class Gumlet_Video_Settings
         ?>
         <div class="wrap">
     <h1>
-        <img src="<?php echo plugins_url('includes/assets/images/gumlet-logo.png', __DIR__); ?>" alt="gumlet Logo" class="top-logo">
+        <img src="<?php echo esc_url(plugins_url('includes/assets/images/gumlet-logo.png', __DIR__)); ?>" alt="gumlet Logo" class="top-logo">
     </h1>
     
-    <form method="post" action="<?php echo admin_url('options.php'); ?>">
+    <form method="post" action="<?php echo esc_url(admin_url('options.php')); ?>">
 
         <?php settings_fields('gumlet_video_settings_group'); ?>
         <div class="mytabs">
@@ -137,7 +138,7 @@ class Gumlet_Video_Settings
     }
 
     public function load_plugin_script_files(){
-        wp_register_style('admin_tabs', plugins_url('includes/assets/css/tabs.css', __DIR__), false);
+        wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false);
         wp_enqueue_style('admin_tabs');
     }
     

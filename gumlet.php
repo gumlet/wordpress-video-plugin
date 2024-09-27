@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
  /*
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
