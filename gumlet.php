@@ -61,7 +61,6 @@ function gumlet_video_shortcode($atts)
     }
    
     $uniq = 'u' . rand();
-    // $url = "https://play.gumlet.io/embed/$video?otp=$OTP&playbackInfo=$playbackInfo";
     $url = "https://play.gumlet.io/embed/$video?";
     if ($sc_args['autoplay']) {
         $url .= "autoplay=true&";
@@ -88,17 +87,11 @@ function gumlet_video_shortcode($atts)
         $closing_div = '</div>';
     }
     
-    $output = <<<END
-    
-        $opening_div
-        <iframe
-        src="$url" id="$uniq" loading="lazy" title="Gumlet video player"
-        $style
-        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;" frameborder="0"></iframe>
-        $closing_div
-        <script>
-        </script>
-    END;
+    $output = 
+        $opening_div.'
+        <iframe src="'.$url.'" id="'.$uniq.'" loading="lazy" title="Gumlet video player"' .$style.' 
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;" frameborder="0"></iframe>'.
+        $closing_div;
         
     return $output;
 }
