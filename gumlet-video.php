@@ -20,6 +20,12 @@ if (!defined('GUMLET_PLUGIN_VERSION')) {
     define('GUMLET_PLUGIN_VERSION', '1.0');
 }
 
+function gumlet_oembed_provider() {
+    wp_oembed_add_provider( '#https?://play\.gumlet\.io/embed/.*#i', 'https://api.gumlet.com/v1/oembed', true );
+    wp_oembed_add_provider( '#https?://gumlet\.tv/watch/.*#i', 'https://api.gumlet.com/v1/oembed', true );
+}
+
+
 function gumlet_video_shortcode($atts)
 {
     $watermark = get_option('gumlet_video_settings');
@@ -115,11 +121,12 @@ add_filter('plugin_action_links', 'gumlet_video_plugin_admin_action_links', 10, 
 
 register_activation_hook(__FILE__, 'gumlet_video_plugin_activate');
 
+add_action( 'init', 'gumlet_oembed_provider' );
 
 function gumlet_video_plugin_activate()
 {
     // plugin activation code here...
     if (!get_option('gumlet_video_settings')) {
-        update_option('gumlet_video_settings', ["dynamic_watermark" => 0, "dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0]);
+        update_option('gumlet_video_settings', ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0]);
     }
 }

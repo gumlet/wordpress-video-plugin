@@ -64,7 +64,7 @@ class Gumlet_Video_Settings
                         <tr>
                             <th>
                                 <label class="description" for="gumlet_default_cc_enabled">
-                                    <?php esc_html_e('Show Subtitles automatically', 'gumlet'); ?>
+                                    <?php esc_html_e('Show Subtitles automatically', 'gumlet-video'); ?>
                                 </label>
                             </th>
                             <td>
@@ -76,25 +76,25 @@ class Gumlet_Video_Settings
                         <tr id="dynamic_watermark_options">
                             <th>
                                 <label class="description" for="">
-                                    <?php esc_html_e('Dynamic Watermark Options', 'gumlet'); ?>
+                                    <?php esc_html_e('Dynamic Watermark Options', 'gumlet-video'); ?>
                                 </label>
                             </th>
                             <td>
                                 <label class="description" for="gumlet_video_settings[dynamic_watermark_name]">
-                                    <?php esc_html_e('Name', 'gumlet'); ?>
+                                    <?php esc_html_e('Name', 'gumlet-video'); ?>
                                 </label>
 
                                 <input id="gumlet_video_settings[dynamic_watermark_name]" type="checkbox" name="gumlet_video_settings[dynamic_watermark_name]"
                                     value=1 <?php checked(1, $this->get_option('dynamic_watermark_name')) ?> />
 
                                 <label class="description" for="gumlet_video_settings[dynamic_watermark_email]">
-                                    <?php esc_html_e('Email', 'gumlet'); ?>
+                                    <?php esc_html_e('Email', 'gumlet-video'); ?>
                                 </label>
                                 <input id="gumlet_video_settings[dynamic_watermark_email]" type="checkbox" name="gumlet_video_settings[dynamic_watermark_email]"
                                     value=1 <?php checked(1, $this->get_option('dynamic_watermark_email')) ?> />
 
                                 <label class="description" for="gumlet_video_settings[dynamic_watermark_user_id]">
-                                    <?php esc_html_e('User ID', 'gumlet'); ?>
+                                    <?php esc_html_e('User ID', 'gumlet-video'); ?>
                                 </label>
                                 <input id="gumlet_video_settings[dynamic_watermark_user_id]" type="checkbox" name="gumlet_video_settings[dynamic_watermark_user_id]"
                                     value=1 <?php checked(1, $this->get_option('dynamic_watermark_user_id')) ?> />
@@ -107,7 +107,7 @@ class Gumlet_Video_Settings
             </div>
             
         </div>
-        <input type="submit" class="button-primary" value="<?php esc_html_e('Save Options', 'gumlet'); ?>" />
+        <input type="submit" class="button-primary" value="<?php esc_html_e('Save Options', 'gumlet-video'); ?>" />
 
     </form>
     <br>
@@ -133,8 +133,24 @@ class Gumlet_Video_Settings
      */
     public function gumlet_register_settings()
     {
-        register_setting('gumlet_video_settings_group', 'gumlet_video_settings');
-        register_setting('gumlet_video_settings_group', 'gumlet_default_cc_enabled', ["type"=> 'boolean', "default"=>true]);
+        register_setting('gumlet_video_settings_group', 'gumlet_video_settings', ['sanitize_callback' => 'sanitize_watermark_input', 'default'=> ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0]]);
+        register_setting('gumlet_video_settings_group', 'gumlet_default_cc_enabled', ['type'=> 'boolean', 'default'=> true, 'sanitize_callback' => "sanitize_boolean_input"]);
+    }
+
+    function sanitize_boolean_input( $input ) {
+        return filter_var( $input, FILTER_VALIDATE_BOOLEAN );
+    }
+
+    function sanitize_watermark_input( $input ) {
+        $allowed_keys = array( 'dynamic_watermark_email', 'dynamic_watermark_name', 'dynamic_watermark_user_id' );
+        $sanitized_array = array();
+        foreach ( $input as $key => $value ) {
+            $key = sanitize_key( $key );
+            if ( in_array( $key, $allowed_keys, true ) ) {
+                $sanitized_array[ $key ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+            }
+        }
+        return $sanitized_array;
     }
 
     public function load_plugin_script_files(){
