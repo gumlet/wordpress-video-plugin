@@ -129,4 +129,7 @@ function gumlet_video_plugin_activate()
     if (!get_option('gumlet_video_settings')) {
         update_option('gumlet_video_settings', ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0]);
     }
+    if(!get_option('gumlet_default_cc_enabled')) {
+        update_option('gumlet_default_cc_enabled', 1);
+    }
 }

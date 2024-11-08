@@ -133,25 +133,29 @@ class Gumlet_Video_Settings
      */
     public function gumlet_register_settings()
     {
-        register_setting('gumlet_video_settings_group', 'gumlet_video_settings', ['sanitize_callback' => 'sanitize_watermark_input', 'default'=> ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0]]);
-        register_setting('gumlet_video_settings_group', 'gumlet_default_cc_enabled', ['type'=> 'boolean', 'default'=> true, 'sanitize_callback' => "sanitize_boolean_input"]);
-    }
-
-    function sanitize_boolean_input( $input ) {
-        return filter_var( $input, FILTER_VALIDATE_BOOLEAN );
-    }
-
-    function sanitize_watermark_input( $input ) {
-        $allowed_keys = array( 'dynamic_watermark_email', 'dynamic_watermark_name', 'dynamic_watermark_user_id' );
-        $sanitized_array = array();
-        foreach ( $input as $key => $value ) {
-            $key = sanitize_key( $key );
-            if ( in_array( $key, $allowed_keys, true ) ) {
-                $sanitized_array[ $key ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+        register_setting('gumlet_video_settings_group', 'gumlet_video_settings', function($input) {
+            if(!empty($input) && is_array($input)) {
+                $allowed_keys = array( 'dynamic_watermark_email', 'dynamic_watermark_name', 'dynamic_watermark_user_id' );
+                $sanitized_array = array();
+                foreach ( $input as $key => $value ) {
+                    $key = sanitize_key( $key );
+                    if ( in_array( $key, $allowed_keys, true ) ) {
+                        $sanitized_array[ $key ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+                    }
+                }
+                return $sanitized_array;
             }
-        }
-        return $sanitized_array;
+            return ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0];
+        });
+
+        register_setting('gumlet_video_settings_group', 'gumlet_default_cc_enabled', function($input) {
+            if(!empty($input)) {
+                return filter_var( $input, FILTER_VALIDATE_BOOLEAN );
+            }
+            return 0;
+        });
     }
+
 
     public function load_plugin_script_files(){
         wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false, '1.0.1');
