@@ -14,21 +14,21 @@ Description
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
 
-This is the plugin you ever need for securing videos!
+This is the plugin you ever need to secure videos!
 
 
 Installation Guide for Dynamic Watermark
 ----------------------------------------
 
-1. Enable the dymanic watermark and set the visual configuration in the player settings options on Video CMS. Visit [https://dashboard.gumlet.com/video/manage?tab=edit_player](https://dashboard.gumlet.com/video/manage?tab=edit_player)
+1. Enable the dynamic watermark and set the visual configuration in the player settings options on Video CMS. Visit [https://dashboard.gumlet.com/video/manage?tab=edit_player](https://dashboard.gumlet.com/video/manage?tab=edit_player)
 
-2. Select options (name, email, user_id) from the Gumlet WordPress plugin settings and save to show them over the video.
+2. Select options (name, email, user_id) from the Gumlet WordPress plugin settings and save them to show them over the video.
 
-3. Use Gumlet shortcode to embed videos anywhere across WordPress website.
+3. Use Gumlet shortcode to embed videos anywhere across the WordPress website.
 
 4. Sample shortcode to use - `[gumlet id=653f6137411da17d32e574a5]`
 
-5. Define the width, height of the Embed inside the shortcode - `[gumlet id=653f6137411da17d32e574a5 width=800 height=600]`
+5. Define the width and height of the Embed inside the shortcode - `[gumlet id=653f6137411da17d32e574a5 width=800 height=600]`
 
 
 
@@ -49,7 +49,7 @@ Frequently Asked Questions
 
 > **Can I use email and name in the dynamic watermark?**
 
-> Yes, you can use name, email and user_id in a combination as per your need.
+> Yes, you can use name, email, and user_id in a combination as per your need.
 
 > **Is it free to use?**
 
