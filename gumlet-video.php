@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
  * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
- * Version:           1.0.1
+ * Version:           1.1
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
  * Text Domain:       gumlet-video
@@ -36,6 +36,7 @@ function gumlet_video_shortcode($atts)
             'cc_enabled' => get_option('gumlet_default_cc_enabled'),
             'id'    => 'id',
             'annotate'=> true,
+            'user_analytics'=> get_option('gumlet_default_user_analytics'),
             'autoplay'=> false,
             'loop'=> false,
             'controls'=> 'on',
@@ -47,6 +48,7 @@ function gumlet_video_shortcode($atts)
     $id = $sc_args['id'];
     $annotate = $sc_args['annotate'];
     $cc_enabled = $sc_args['cc_enabled'];
+    $user_analytics = $sc_args['user_analytics'];
 
     if (!$atts['id']) {
         return "Required argument id for embedded video not found.";
@@ -55,7 +57,8 @@ function gumlet_video_shortcode($atts)
     }
     
     $watermark_text = '';
-    if($annotate) {
+    $logged_in = is_user_logged_in();
+    if($annotate && $logged_in) {
         $current_user = wp_get_current_user();
         if(isset($watermark['dynamic_watermark_name']) && $watermark['dynamic_watermark_name']) {
             $watermark_text .= $current_user->display_name . " ";
@@ -66,6 +69,12 @@ function gumlet_video_shortcode($atts)
         if(isset($watermark['dynamic_watermark_user_id']) && $watermark['dynamic_watermark_user_id']) {
             $watermark_text .= $current_user->ID;
         }
+    }
+    $analytics_text = '';
+    if($user_analytics && $logged_in) {
+        $analytics_text = 'gm_user_id='.$current_user->ID.
+                            '&gm_user_name='. urlencode($current_user->display_name).
+                            '&gm_user_email='.$current_user->user_email;
     }
    
     $uniq = 'u' . wp_rand();
@@ -83,7 +92,10 @@ function gumlet_video_shortcode($atts)
         $url .= "caption=true&";
     }
     if($watermark_text != '') {
-        $url .= "watermark_text=".$watermark_text;
+        $url .= "watermark_text=".$watermark_text."&";
+    }
+    if($analytics_text != '') {
+        $url .= $analytics_text;
     }
     if($width != "100%") {
         $opening_div = '<div>';
@@ -131,5 +143,8 @@ function gumlet_video_plugin_activate()
     }
     if(!get_option('gumlet_default_cc_enabled')) {
         update_option('gumlet_default_cc_enabled', 1);
+    }
+    if(!get_option('gumlet_default_user_analytics')) {
+        update_option('gumlet_default_user_analytics', 1);
     }
 }

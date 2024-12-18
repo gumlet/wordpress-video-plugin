@@ -1,7 +1,7 @@
 # Gumlet Wordpress Video Plugin
 
 
-An official plugin by Gumlet for video embedding, dynamic watermark configuration and shortcode.
+An official plugin by Gumlet for video embedding, dynamic watermark configuration, user level analytics and shortcode.
 
 Description
 -----------
@@ -13,6 +13,7 @@ Description
 > * Use shortcode to embed videos quickly
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
+> * Track user level analytics for deeper insights
 
 This is the plugin you ever need to secure videos!
 

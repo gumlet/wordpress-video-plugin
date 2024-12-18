@@ -6,22 +6,23 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.2
 Tested up to: 6.6
-Stable tag: 1.0.1
+Stable tag: 1.1
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-An official plugin by Gumlet for video embedding, dynamic watermark configuration and shortcode.
+An official plugin by Gumlet for video embedding, dynamic watermark configuration, user level analytics and shortcode.
 
 == Description ==
 
-> **The plugin offers dynamic watermarking, player customisation and embed shortcode for Gumlet videos**
+> **The plugin offers dynamic watermarking, player customisation, user level analytics, and embed shortcode for Gumlet videos**
 >
 > * Automate your video security using dynamic watermark support
 > * Select specific user data such as name, email, id to show as the dynamic watermark
 > * Use shortcode to embed videos quickly
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
+> * Track user level analytics for deeper insights
 > * Gumlet uses play.gumlet.io domain for data transfer. This domain is owned by https://www.gumlet.com. Read [Privacy Policy](https://www.gumlet.com/privacy/) and [Terms of Service](https://www.gumlet.com/terms/)
 
 This is the plugin you will ever need for securing videos!
@@ -70,6 +71,11 @@ Yes, you can use name, email and user_id in a combination as per your need.
 Gumlet Video plugin is free to use. However, to use the dynamic watermark on your videos, you would need a Business plan. Learn more about plans [here](https://www.gumlet.com/pricing/?tab=video)
 
 == Changelog ==
+
+= 1.1 =
+* Added support for user level analytics
+* Fixed bug for non-logged in user for dynamic watermark
+
 
 = 1.0 =
 * First plugin version

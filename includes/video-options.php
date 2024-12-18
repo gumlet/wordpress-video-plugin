@@ -64,13 +64,25 @@ class Gumlet_Video_Settings
                         <tr>
                             <th>
                                 <label class="description" for="gumlet_default_cc_enabled">
-                                    <?php esc_html_e('Show Subtitles automatically', 'gumlet-video'); ?>
+                                    <?php esc_html_e('Show subtitles automatically', 'gumlet-video'); ?>
                                 </label>
                             </th>
                             <td>
                                 <input id="gumlet_default_cc_enabled" type="checkbox" name="gumlet_default_cc_enabled" value="1"
                                     <?php checked(get_option('gumlet_default_cc_enabled')) ?> />
                                 <p class="help-text">If this is enabled, the videos having subtitles will show it by default.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label class="description" for="gumlet_default_user_analytics">
+                                    <?php esc_html_e('Track user analytics', 'gumlet-video'); ?>
+                                </label>
+                            </th>
+                            <td>
+                                <input id="gumlet_default_user_analytics" type="checkbox" name="gumlet_default_user_analytics" value="1"
+                                    <?php checked(get_option('gumlet_default_user_analytics')) ?> />
+                                <p class="help-text">If this is enabled, the analytics will also have user data when they are logged in.</p>
                             </td>
                         </tr>
                         <tr id="dynamic_watermark_options">
@@ -147,8 +159,14 @@ class Gumlet_Video_Settings
             }
             return ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0];
         });
-
+        
         register_setting('gumlet_video_settings_group', 'gumlet_default_cc_enabled', function($input) {
+            if(!empty($input)) {
+                return filter_var( $input, FILTER_VALIDATE_BOOLEAN );
+            }
+            return 0;
+        });
+        register_setting('gumlet_video_settings_group', 'gumlet_default_user_analytics', function($input) {
             if(!empty($input)) {
                 return filter_var( $input, FILTER_VALIDATE_BOOLEAN );
             }
@@ -158,7 +176,7 @@ class Gumlet_Video_Settings
 
 
     public function load_plugin_script_files(){
-        wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false, '1.0.1');
+        wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false, '1.1');
         wp_enqueue_style('admin_tabs');
     }
     
