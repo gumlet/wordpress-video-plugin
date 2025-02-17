@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
  * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
  * Text Domain:       gumlet-video
@@ -43,12 +43,13 @@ function gumlet_video_shortcode($atts)
         ),
         $atts
     );
-    $width = $sc_args['width'];
-    $height = $sc_args['height'];
-    $id = $sc_args['id'];
-    $annotate = $sc_args['annotate'];
-    $cc_enabled = $sc_args['cc_enabled'];
-    $user_analytics = $sc_args['user_analytics'];
+
+    $width = esc_attr($sc_args['width']);
+    $height = esc_attr($sc_args['height']);
+    $id = esc_attr($sc_args['id']);
+    $annotate = esc_attr($sc_args['annotate']);
+    $cc_enabled = esc_attr($sc_args['cc_enabled']);
+    $user_analytics = esc_attr($sc_args['user_analytics']);
 
     if (!$atts['id']) {
         return "Required argument id for embedded video not found.";
@@ -107,6 +108,8 @@ function gumlet_video_shortcode($atts)
         $closing_div = '</div>';
     }
     
+    $url = esc_url($url);
+
     $output = 
         $opening_div.'
         <iframe src="'.$url.'" id="'.$uniq.'" loading="lazy" title="Gumlet video player"' .$style.' 
