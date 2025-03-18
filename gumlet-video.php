@@ -78,7 +78,7 @@ function gumlet_video_shortcode($atts)
                             '&gm_user_email='.$current_user->user_email;
     }
    
-    $uniq = 'u' . wp_rand();
+    $uniq = 'gumlet-' . sanitize_html_class(wp_rand());
     $url = "https://play.gumlet.io/embed/$video?";
     if ($sc_args['autoplay']) {
         $url .= "autoplay=true&";
@@ -100,7 +100,11 @@ function gumlet_video_shortcode($atts)
     }
     if($width != "100%") {
         $opening_div = '<div>';
-        $style = 'width="'.$width.'" height="'.$height.'" style="border:none;"';
+        $style = sprintf(
+            'width="%s" height="%s" style="border:none;"',
+            esc_attr($width),
+            esc_attr($height)
+        );
         $closing_div = '</div>';
     } else {
         $opening_div = '<div style="padding:56.25% 0 0 0;position:relative;">';
@@ -110,11 +114,15 @@ function gumlet_video_shortcode($atts)
     
     $url = esc_url($url);
 
-    $output = 
-        $opening_div.'
-        <iframe src="'.$url.'" id="'.$uniq.'" loading="lazy" title="Gumlet video player"' .$style.' 
-        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;" frameborder="0"></iframe>'.
-        $closing_div;
+    $output = sprintf(
+        '%s<iframe src="%s" id="%s" loading="lazy" title="%s" %s allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;" frameborder="0"></iframe>%s',
+        wp_kses_post($opening_div),
+        esc_url($url),
+        esc_attr($uniq),
+        esc_attr__('Gumlet video player', 'gumlet-video'),
+        $style,
+        wp_kses_post($closing_div)
+    );
         
     return $output;
 }

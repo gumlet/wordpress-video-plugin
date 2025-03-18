@@ -4,8 +4,8 @@ Contributors: adityapatadia, akbansa
 Tags: video embed, dymanic watermarking, content security
 Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
-Requires at least: 5.2
-Tested up to: 6.7
+Requires at least: 5.0
+Tested up to: 6.4.3
 Stable tag: 1.0.5
 Requires PHP: 7.2
 License: GPLv2
@@ -74,6 +74,7 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 
 = 1.0.5 =
 * Added Gutenberg block support for Gumlet video embedding
+* Updated security settings
 
 = 1.0.4 =
 * Fixed security issues - XSS
