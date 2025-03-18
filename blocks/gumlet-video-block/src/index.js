@@ -9,6 +9,14 @@ import {
 	ToggleControl,
 	SelectControl,
 } from '@wordpress/components';
+import GumletIcon from './icon';
+
+// Register the custom icon
+registerBlockType('gumlet/gumlet-video-block', {
+	icon: GumletIcon,
+	edit: EditComponent,
+	save: SaveComponent,
+});
 
 /**
  * Generates the Gumlet video embed URL with the provided parameters
@@ -37,7 +45,6 @@ function EditComponent({ attributes, setAttributes }) {
 		id,
 		width,
 		height,
-		ccEnabled,
 		autoplay,
 		loop,
 	} = attributes;
@@ -51,14 +58,19 @@ function EditComponent({ attributes, setAttributes }) {
 		{ label: '75%', value: '75%' },
 		{ label: '50%', value: '50%' },
 		{ label: '25%', value: '25%' },
-		{ label: 'Custom', value: 'custom' }
+		{ label: 'Custom', value: 'custom', placeholder: 'e.g. 1000px or 50%' }
 	];
 
-	// Helper function to handle dimension changes
+	// Fixed dimension change handler
 	const handleDimensionChange = (dimension, value, isCustom = false) => {
-		if (isCustom) {
+		if (value === 'custom') {
+			// When switching to custom, set the value to empty string to trigger custom input
+			setAttributes({ [dimension]: '' });
+		} else if (isCustom) {
+			// Handle custom value input
 			setAttributes({ [dimension]: value });
 		} else {
+			// Handle preset values (percentages)
 			setAttributes({ [dimension]: value });
 		}
 	};
@@ -76,32 +88,34 @@ function EditComponent({ attributes, setAttributes }) {
 					
 					<SelectControl
 						label={__('Width', 'gumlet-video')}
-						value={width === 'custom' ? 'custom' : width}
+						value={width === '' ? 'custom' : (dimensionOptions.some(opt => opt.value === width) ? width : 'custom')}
 						options={dimensionOptions}
 						onChange={(newVal) => handleDimensionChange('width', newVal)}
 					/>
 
-					{width === 'custom' && (
+					{(width === '' || !dimensionOptions.some(opt => opt.value === width)) && (
 						<TextControl
 							label={__('Custom Width', 'gumlet-video')}
 							value={width}
 							onChange={(newVal) => handleDimensionChange('width', newVal, true)}
+							placeholder={__('e.g. 1000px or 50%', 'gumlet-video')}
 							help={__('Enter width in px or %', 'gumlet-video')}
 						/>
 					)}
 
 					<SelectControl
 						label={__('Height', 'gumlet-video')}
-						value={height === 'custom' ? 'custom' : height}
+						value={height === '' ? 'custom' : (dimensionOptions.some(opt => opt.value === height) ? height : 'custom')}
 						options={dimensionOptions}
 						onChange={(newVal) => handleDimensionChange('height', newVal)}
 					/>
 
-					{height === 'custom' && (
+					{(height === '' || !dimensionOptions.some(opt => opt.value === height)) && (
 						<TextControl
 							label={__('Custom Height', 'gumlet-video')}
 							value={height}
 							onChange={(newVal) => handleDimensionChange('height', newVal, true)}
+							placeholder={__('e.g. 1000px or 50%', 'gumlet-video')}
 							help={__('Enter height in px or %', 'gumlet-video')}
 						/>
 					)}
@@ -172,11 +186,3 @@ function EditComponent({ attributes, setAttributes }) {
 function SaveComponent({ attributes }) {
 	return null; // Server-side rendering will handle this
 }
-
-/**
- * Register the block
- */
-registerBlockType('gumlet/gumlet-video-block', {
-	edit: EditComponent,
-	save: SaveComponent,
-});
