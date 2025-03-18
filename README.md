@@ -11,6 +11,7 @@ Description
 > * Automate your video security using dynamic watermark support
 > * Select specific user data such as name, email, id to show as the dynamic watermark
 > * Use shortcode to embed videos quickly
+> * Add videos using gutenberg block
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
 > * Track user level analytics for deeper insights
@@ -30,6 +31,8 @@ Installation Guide for Dynamic Watermark
 4. Sample shortcode to use - `[gumlet id=653f6137411da17d32e574a5]`
 
 5. Define the width and height of the Embed inside the shortcode - `[gumlet id=653f6137411da17d32e574a5 width=800 height=600]`
+
+6. Embed videos directly with Gutenberg block
 
 
 
