@@ -15,20 +15,15 @@ import {
  */
 function generateEmbedUrl(attributes) {
 	const {
-		assetId,
+		id,
 		autoplay,
-		loop,
-		controls,
-		ccEnabled,
-		userAnalytics
+		loop
 	} = attributes;
 
-	let url = `https://play.gumlet.io/embed/${assetId}?`;
+	let url = `https://play.gumlet.io/embed/${id}?`;
 	
 	if (autoplay) url += "autoplay=true&";
 	if (loop) url += "loop=true&";
-	if (!controls) url += "disable_player_controls=false&";
-	if (ccEnabled) url += "caption=true&";
 	
 	// User analytics will be handled server-side
 	return url.slice(0, -1); // Remove trailing & or ?
@@ -39,14 +34,12 @@ function generateEmbedUrl(attributes) {
  */
 function EditComponent({ attributes, setAttributes }) {
 	const {
-		assetId,
+		id,
 		width,
 		height,
 		ccEnabled,
 		autoplay,
 		loop,
-		controls,
-		userAnalytics
 	} = attributes;
 
 	const blockProps = useBlockProps({
@@ -61,54 +54,57 @@ function EditComponent({ attributes, setAttributes }) {
 		{ label: 'Custom', value: 'custom' }
 	];
 
+	// Helper function to handle dimension changes
+	const handleDimensionChange = (dimension, value, isCustom = false) => {
+		if (isCustom) {
+			setAttributes({ [dimension]: value });
+		} else {
+			setAttributes({ [dimension]: value });
+		}
+	};
+
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Gumlet Video Settings', 'gumlet-video')}>
 					<TextControl
 						label={__('Asset ID', 'gumlet-video')}
-						value={assetId}
-						onChange={(newVal) => setAttributes({ assetId: newVal })}
+						value={id}
+						onChange={(newVal) => setAttributes({ id: newVal })}
 						help={__('Enter the Gumlet Asset ID.', 'gumlet-video')}
 					/>
 					
 					<SelectControl
 						label={__('Width', 'gumlet-video')}
-						value={width}
+						value={width === 'custom' ? 'custom' : width}
 						options={dimensionOptions}
-						onChange={(newVal) => setAttributes({ width: newVal })}
+						onChange={(newVal) => handleDimensionChange('width', newVal)}
 					/>
 
 					{width === 'custom' && (
 						<TextControl
 							label={__('Custom Width', 'gumlet-video')}
 							value={width}
-							onChange={(newVal) => setAttributes({ width: newVal })}
+							onChange={(newVal) => handleDimensionChange('width', newVal, true)}
 							help={__('Enter width in px or %', 'gumlet-video')}
 						/>
 					)}
 
 					<SelectControl
 						label={__('Height', 'gumlet-video')}
-						value={height}
+						value={height === 'custom' ? 'custom' : height}
 						options={dimensionOptions}
-						onChange={(newVal) => setAttributes({ height: newVal })}
+						onChange={(newVal) => handleDimensionChange('height', newVal)}
 					/>
 
 					{height === 'custom' && (
 						<TextControl
 							label={__('Custom Height', 'gumlet-video')}
 							value={height}
-							onChange={(newVal) => setAttributes({ height: newVal })}
+							onChange={(newVal) => handleDimensionChange('height', newVal, true)}
 							help={__('Enter height in px or %', 'gumlet-video')}
 						/>
 					)}
-
-					<ToggleControl
-						label={__('Enable Closed Captions', 'gumlet-video')}
-						checked={ccEnabled}
-						onChange={(newVal) => setAttributes({ ccEnabled: newVal })}
-					/>
 
 					<ToggleControl
 						label={__('Autoplay', 'gumlet-video')}
@@ -121,23 +117,27 @@ function EditComponent({ attributes, setAttributes }) {
 						checked={loop}
 						onChange={(newVal) => setAttributes({ loop: newVal })}
 					/>
-
-					<ToggleControl
-						label={__('Show Player Controls', 'gumlet-video')}
-						checked={controls}
-						onChange={(newVal) => setAttributes({ controls: newVal })}
-					/>
-
-					<ToggleControl
-						label={__('Enable User Analytics', 'gumlet-video')}
-						checked={userAnalytics}
-						onChange={(newVal) => setAttributes({ userAnalytics: newVal })}
-					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
-				{assetId ? (
+				{!id ? (
+					<div style={{ 
+						textAlign: 'center', 
+						padding: '2em', 
+						backgroundColor: '#f0f0f0', 
+						border: '1px dashed #999',
+						marginBottom: '1em'
+					}}>
+						<TextControl
+							label={__('Enter Gumlet Asset ID', 'gumlet-video')}
+							value={id}
+							onChange={(newVal) => setAttributes({ id: newVal })}
+							placeholder={__('e.g., abc123xyz', 'gumlet-video')}
+							help={__('Paste your Gumlet Asset ID here to embed the video.', 'gumlet-video')}
+						/>
+					</div>
+				) : (
 					<div className="gumlet-video-container" style={{
 						position: 'relative',
 						paddingTop: '56.25%', // 16:9 Aspect Ratio
@@ -159,10 +159,6 @@ function EditComponent({ attributes, setAttributes }) {
 							frameBorder="0"
 						/>
 					</div>
-				) : (
-					<p style={{ textAlign: 'center', padding: '2em', backgroundColor: '#f0f0f0', border: '1px dashed #999' }}>
-						{__('Please enter an Asset ID in the block settings.', 'gumlet-video')}
-					</p>
 				)}
 			</div>
 		</>

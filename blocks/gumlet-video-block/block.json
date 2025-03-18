@@ -9,7 +9,7 @@
     "keywords": [ "gumlet", "video", "embed" ],
     "textdomain": "gumlet-video-block",
     "attributes": {
-      "assetId": {
+      "id": {
         "type": "string",
         "default": ""
       },
