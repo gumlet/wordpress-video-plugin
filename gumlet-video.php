@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 include('includes/video-options.php');
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
-    define('GUMLET_PLUGIN_VERSION', '1.0');
+    define('GUMLET_PLUGIN_VERSION', '1.0.4');
 }
 
 function gumlet_oembed_provider() {
@@ -93,7 +93,7 @@ function gumlet_video_shortcode($atts)
         $url .= "caption=true&";
     }
     if($watermark_text != '') {
-        $url .= "watermark_text=".$watermark_text."&";
+        $url .= "watermark_text=".esc_attr($watermark_text)."&";
     }
     if($analytics_text != '') {
         $url .= $analytics_text;
@@ -151,3 +151,18 @@ function gumlet_video_plugin_activate()
         update_option('gumlet_default_user_analytics', 1);
     }
 }
+
+
+
+
+function gumlet_video_block_init() {
+    // Automatically load all assets mentioned in block.json.
+    // Path: adapt to wherever your block.json is located.
+    register_block_type(
+        __DIR__ . '/blocks/gumlet-video-block/block.json',
+        array(
+            'render_callback' => 'gumlet_video_shortcode',
+        )
+    );
+}
+add_action( 'init', 'gumlet_video_block_init' );

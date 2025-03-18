@@ -1,0 +1,57 @@
+{
+    "apiVersion": 2,
+    "name": "gumlet/gumlet-video-block",
+    "version": "1.0.0",
+    "title": "Gumlet Video",
+
+    "icon": "video-alt3",
+    "description": "Embed a Gumlet video by providing an asset ID, width, and height.",
+    "keywords": [ "gumlet", "video", "embed" ],
+    "textdomain": "gumlet-video-block",
+    "attributes": {
+      "assetId": {
+        "type": "string",
+        "default": ""
+      },
+      "width": {
+        "type": "string",
+        "default": "100%"
+      },
+      "height": {
+        "type": "string",
+        "default": "100%"
+      },
+      "ccEnabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "autoplay": {
+        "type": "boolean",
+        "default": false
+      },
+      "loop": {
+        "type": "boolean",
+        "default": false
+      },
+      "controls": {
+        "type": "boolean",
+        "default": true
+      },
+      "userAnalytics": {
+        "type": "boolean",
+        "default": true
+      },
+      "align": {
+        "type": "string",
+        "default": "none"
+      }
+    },
+    "supports": {
+      "align": true
+    },
+    "editorScript": "file:./build/index.js",
+    "editorStyle": "file:./build/index.css",
+    "style": "file:./build/style-index.css",
+    "render": "file:./render.php"
+  }
+  
