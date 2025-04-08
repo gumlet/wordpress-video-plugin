@@ -5,7 +5,7 @@ Tags: video embed, dymanic watermarking, content security
 Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 1.0.5
 Requires PHP: 7.2
 License: GPLv2
