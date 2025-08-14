@@ -6,7 +6,7 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 1.0.9
+Stable tag: 1.1.1
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -77,7 +77,7 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 
 == Changelog ==
 
-= 1.0.9 =
+= 1.1.1 =
 * Update docs for Gutenberg block support
 
 = 1.0.5 =
