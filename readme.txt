@@ -6,7 +6,7 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -20,6 +20,7 @@ An official plugin by Gumlet for video embedding, dynamic watermark configuratio
 > * Automate your video security using dynamic watermark support
 > * Select specific user data such as name, email, id to show as the dynamic watermark
 > * Use shortcode to embed videos quickly
+> * Add videos using gutenberg block
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
 > * Track user level analytics for deeper insights
@@ -34,6 +35,8 @@ This is the plugin you will ever need for securing videos!
 2. Gumlet Player customisation panel
 3. How does it work?
 4. Shortcode usage
+5. Gutenberg block usage
+6. Block editor usage
 
 == Installation Guide for Dynamic Watermark ==
 
@@ -46,6 +49,8 @@ This is the plugin you will ever need for securing videos!
 4. Sample shortcode to use - `[gumlet id=653f6137411da17d32e574a5]`
 
 5. Define the width, height of the Embed inside the shortcode - `[gumlet id=653f6137411da17d32e574a5 width=800 height=600]`
+
+6. Embed videos directly with Gutenberg block
 
 
 
@@ -72,6 +77,9 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 
 == Changelog ==
 
+= 1.0.9 =
+* Update docs for Gutenberg block support
+
 = 1.0.5 =
 * Added Gutenberg block support for Gumlet video embedding
 * Updated security settings
@@ -79,11 +87,9 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 = 1.0.4 =
 * Fixed security issues - XSS
 
-
 = 1.0.3 =
 * Added support for user level analytics
 * Fixed bug for non-logged in user for dynamic watermark
-
 
 = 1.0 =
 * First plugin version

@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
  * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
- * Version:           1.0.5
+ * Version:           1.0.9
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
  * Text Domain:       gumlet-video
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 include('includes/video-options.php');
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
-    define('GUMLET_PLUGIN_VERSION', '1.0.5');
+    define('GUMLET_PLUGIN_VERSION', '1.0.9');
 }
 
 function gumlet_oembed_provider() {
