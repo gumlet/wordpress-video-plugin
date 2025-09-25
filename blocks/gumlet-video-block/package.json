@@ -9,7 +9,7 @@
       "start": "wp-scripts start"
     },
     "devDependencies": {
-      "@wordpress/scripts": "^24.2.0"
+      "@wordpress/scripts": "^30.24.0"
     }
   }
   
