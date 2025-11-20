@@ -40,6 +40,8 @@ function gumlet_video_shortcode($atts)
             'autoplay'=> false,
             'loop'=> false,
             'controls'=> 'on',
+            'audio_track_language' => '',
+            'caption_language' => '',
         ),
         $atts
     );
@@ -50,6 +52,8 @@ function gumlet_video_shortcode($atts)
     $annotate = esc_attr($sc_args['annotate']);
     $cc_enabled = esc_attr($sc_args['cc_enabled']);
     $user_analytics = esc_attr($sc_args['user_analytics']);
+    $audio_track_language = esc_attr($sc_args['audio_track_language']);
+    $caption_language = esc_attr($sc_args['caption_language']);
 
     if (!$atts['id']) {
         return "Required argument id for embedded video not found.";
@@ -91,6 +95,12 @@ function gumlet_video_shortcode($atts)
     }
     if(!!$cc_enabled) {
         $url .= "caption=true&";
+    }
+    if($audio_track_language != '') {
+        $url .= "audio_track_language=".esc_attr($audio_track_language)."&";
+    }
+    if($caption_language != '') {
+        $url .= "caption_language=".esc_attr($caption_language)."&";
     }
     if($watermark_text != '') {
         $url .= "watermark_text=".esc_attr($watermark_text)."&";
