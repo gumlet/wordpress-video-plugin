@@ -1,0 +1,33 @@
+# Development dependencies
+node_modules/
+**/node_modules/
+
+# Source files (only built files should be included)
+blocks/gumlet-video-block/src/
+blocks/gumlet-video-block/package.json
+blocks/gumlet-video-block/package-lock.json
+blocks/gumlet-video-block/.gitignore
+
+# Development files
+.git/
+.gitignore
+.distignore
+README.md
+
+# Build tools
+blocks/gumlet-video-block/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
