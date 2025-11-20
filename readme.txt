@@ -50,7 +50,9 @@ This is the plugin you will ever need for securing videos!
 
 5. Define the width, height of the Embed inside the shortcode - `[gumlet id=653f6137411da17d32e574a5 width=800 height=600]`
 
-6. Embed videos directly with Gutenberg block
+6. Set audio track and caption language - `[gumlet id=653f6137411da17d32e574a5 audio_track_language=en caption_language=es]`
+
+7. Embed videos directly with Gutenberg block
 
 
 

@@ -25,13 +25,17 @@ function generateEmbedUrl(attributes) {
 	const {
 		id,
 		autoplay,
-		loop
+		loop,
+		audio_track_language,
+		caption_language
 	} = attributes;
 
 	let url = `https://play.gumlet.io/embed/${id}?`;
 	
 	if (autoplay) url += "autoplay=true&";
 	if (loop) url += "loop=true&";
+	if (audio_track_language) url += `audio_track_language=${encodeURIComponent(audio_track_language)}&`;
+	if (caption_language) url += `caption_language=${encodeURIComponent(caption_language)}&`;
 	
 	// User analytics will be handled server-side
 	return url.slice(0, -1); // Remove trailing & or ?
@@ -47,6 +51,8 @@ function EditComponent({ attributes, setAttributes }) {
 		height,
 		autoplay,
 		loop,
+		audio_track_language,
+		caption_language,
 	} = attributes;
 
 	const blockProps = useBlockProps({
@@ -130,6 +136,20 @@ function EditComponent({ attributes, setAttributes }) {
 						label={__('Loop', 'gumlet-video')}
 						checked={loop}
 						onChange={(newVal) => setAttributes({ loop: newVal })}
+					/>
+
+					<TextControl
+						label={__('Default Audio Track Language', 'gumlet-video')}
+						value={audio_track_language}
+						onChange={(newVal) => setAttributes({ audio_track_language: newVal })}
+						help={__('Enter the language code for the audio track (e.g., en, es, fr).', 'gumlet-video')}
+					/>
+
+					<TextControl
+						label={__('Default Caption Language', 'gumlet-video')}
+						value={caption_language}
+						onChange={(newVal) => setAttributes({ caption_language: newVal })}
+						help={__('Enter the language code for captions (e.g., en, es, fr).', 'gumlet-video')}
 					/>
 				</PanelBody>
 			</InspectorControls>
