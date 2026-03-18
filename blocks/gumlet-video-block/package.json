@@ -1,15 +1,19 @@
 {
     "name": "gumlet-video-block",
-    "version": "1.1.0",
+    "version": "1.2.1",
     "description": "A Gutenberg block for Gumlet videos",
-    "author": "You",
+    "author": "akbansa",
     "license": "GPL-2.0-or-later",
     "scripts": {
-      "build": "wp-scripts build",
-      "start": "wp-scripts start"
+        "build": "wp-scripts build",
+        "start": "wp-scripts start"
     },
     "devDependencies": {
-      "@wordpress/scripts": "^30.24.0"
+        "@wordpress/scripts": "^31.6.0"
+    },
+    "overrides": {
+        "serialize-javascript": "7.0.4",
+        "webpack-dev-server": "5.2.3",
+        "minimatch": "^9.0.7"
     }
-  }
-  
+}

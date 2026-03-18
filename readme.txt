@@ -5,8 +5,8 @@ Tags: video embed, dymanic watermarking, content security
 Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 1.2.0
+Tested up to: 6.9
+Stable tag: 1.2.1
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -78,6 +78,9 @@ Yes, you can use name, email and user_id in a combination as per your need.
 Gumlet Video plugin is free to use. However, to use the dynamic watermark on your videos, you would need a Business plan. Learn more about plans [here](https://www.gumlet.com/pricing/?tab=video)
 
 == Changelog ==
+
+= 1.2.1 =
+* Added support for latest WP versions
 
 = 1.2.0 =
 * Added audio_track_language parameter to shortcode for setting default audio track language
