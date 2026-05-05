@@ -93,6 +93,10 @@ class Gumlet_Media_Library_Admin {
 			true
 		);
 
+		// Ensure @wordpress/components controls (buttons, selects, etc.) are styled
+		// on this standalone admin page across WordPress environments.
+		wp_enqueue_style( 'wp-components' );
+
 		wp_localize_script(
 			'gumlet-media-library',
 			'gumletMediaLibrary',
