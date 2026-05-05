@@ -47,7 +47,7 @@ class Gumlet_Media_Library_Admin {
 		echo '<div class="wrap gumlet-video-library-wrap">';
 		echo '<h1>' . esc_html__( 'Gumlet Video Library', 'gumlet-video' ) . '</h1>';
 		echo '<p class="description">' . esc_html__(
-			'Browse and upload video or audio to your Gumlet account. Copy an Asset ID for the Gumlet Video block, preview the player, or start a new post with this asset already inserted.',
+			'Browse and upload video or audio to your Gumlet account, then start a new post with a selected asset.',
 			'gumlet-video'
 		) . '</p>';
 		echo '<div id="gumlet-media-library-root"></div>';
