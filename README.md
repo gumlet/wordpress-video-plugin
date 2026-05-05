@@ -15,8 +15,17 @@ Description
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
 > * Track user level analytics for deeper insights
+> * Browse Gumlet workspaces, upload videos from the block editor, and preview asset metadata (requires API key – see below)
 
 This is the plugin you ever need to secure videos!
+
+### Gumlet API key (library & upload)
+
+1. Create an API key in your [Gumlet dashboard](https://dash.gumlet.com/developer/api-keys).
+2. In WordPress: **Settings → Gumlet Video → API**: paste the key, save, then **Test connection**.
+3. In the **Gumlet Video** block use **Browse library** or **Upload video file**, or paste an Asset ID manually.
+
+The API key is stored in your WordPress database and used only on the server to call Gumlet; uploads go from the browser directly to Gumlet’s storage using a signed URL. Only users who can **manage_options** (typically Administrators) can use these tools.
 
 
 Installation Guide for Dynamic Watermark

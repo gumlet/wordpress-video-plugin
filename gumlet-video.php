@@ -1,11 +1,21 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! defined( 'GUMLET_VIDEO_PLUGIN_FILE' ) ) {
+	define( 'GUMLET_VIDEO_PLUGIN_FILE', __FILE__ );
+}
+if ( ! defined( 'GUMLET_VIDEO_PLUGIN_DIR' ) ) {
+	define( 'GUMLET_VIDEO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+}
+if ( ! defined( 'GUMLET_VIDEO_PLUGIN_URL' ) ) {
+	define( 'GUMLET_VIDEO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
+
  /*
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
  * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
- * Version:           1.2.1
+ * Version:           1.3.0
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
  * Text Domain:       gumlet-video
@@ -14,10 +24,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 
 
-include('includes/video-options.php');
+require_once __DIR__ . '/includes/class-gumlet-api-client.php';
+require_once __DIR__ . '/includes/class-gumlet-rest-controller.php';
+require_once __DIR__ . '/includes/class-gumlet-media-library-admin.php';
+include __DIR__ . '/includes/video-options.php';
+
+Gumlet_REST_Controller::init();
+Gumlet_Media_Library_Admin::init();
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
-    define('GUMLET_PLUGIN_VERSION', '1.2.1');
+    define('GUMLET_PLUGIN_VERSION', '1.3.0');
 }
 
 function gumlet_oembed_provider() {
@@ -158,7 +174,6 @@ add_action( 'init', 'gumlet_oembed_provider' );
 
 function gumlet_video_plugin_activate()
 {
-    // plugin activation code here...
     if (!get_option('gumlet_video_settings')) {
         update_option('gumlet_video_settings', ["dynamic_watermark_email" => 0, "dynamic_watermark_name"=> 0, "dynamic_watermark_user_id"=> 0]);
     }
