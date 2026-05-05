@@ -148,13 +148,7 @@ class Gumlet_REST_Controller {
 		}
 
 		$result = Gumlet_API_Client::list_assets( $workspace_id, $query );
-		if (is_wp_error( $result ) ) {
-			if(WP_DEBUG) {
-				error_log(
-					'[gumlet-video] list_assets Gumlet error: ' . $result->get_error_code() . ' — ' . $result->get_error_message()
-				);
-			}
-
+		if ( is_wp_error( $result ) ) {
 			return self::error_response( $result );
 		}
 		return rest_ensure_response( $result );

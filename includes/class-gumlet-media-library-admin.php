@@ -125,14 +125,11 @@ class Gumlet_Media_Library_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display param for editor bootstrap.
-		if ( empty( $_GET['gumlet_asset_id'] ) ) {
+		$gumlet_raw = filter_input( INPUT_GET, 'gumlet_asset_id', FILTER_DEFAULT );
+		if ( ! is_string( $gumlet_raw ) ) {
 			return;
 		}
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$raw = wp_unslash( $_GET['gumlet_asset_id'] );
-		$id  = sanitize_text_field( is_string( $raw ) ? $raw : '' );
+		$id = sanitize_text_field( $gumlet_raw );
 		if ( '' === $id ) {
 			return;
 		}

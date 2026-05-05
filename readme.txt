@@ -5,13 +5,13 @@ Tags: video embed, dymanic watermarking, content security
 Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Stable tag: 1.3.0
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-Unlock the full power of video with Gumlet’s official plugin for WordPress. Instantly upload, browse, and embed videos from your Gumlet account, apply advanced dynamic watermarking, access rich user-level analytics, and customize playback through intuitive shortcodes and a dedicated Gutenberg block. Secure, customizable, and built for creators who demand more from their video experience.
+Official Gumlet plugin: embed and upload video with a block or shortcodes, plus watermarking and analytics. Gumlet account and API key required.
 
 == Description ==
 
