@@ -185,6 +185,11 @@ export default function GumletUploader( {
 				if ( cancelled ) {
 					return;
 				}
+				const normalized = normalizeStatus( asset?.status );
+				if ( normalized === 'ready' ) {
+					finishAndEmbed( assetId );
+					return;
+				}
 				setRemoteProgress( gumletEncodeProgressFraction( asset ) );
 				setEmbedChoice( ( prev ) => {
 					if ( ! prev || prev.assetId !== assetId ) {
