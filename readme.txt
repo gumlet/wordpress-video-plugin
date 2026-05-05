@@ -11,23 +11,23 @@ Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-An official plugin by Gumlet for video embedding, dynamic watermark configuration, user level analytics and shortcode.
+Unlock the full power of video with Gumlet’s official plugin for WordPress. Instantly upload, browse, and embed videos from your Gumlet account, apply advanced dynamic watermarking, access rich user-level analytics, and customize playback through intuitive shortcodes and a dedicated Gutenberg block. Secure, customizable, and built for creators who demand more from their video experience.
 
 == Description ==
 
-> **The plugin offers dynamic watermarking, player customisation, user level analytics, and embed shortcode for Gumlet videos**
+> **Gumlet Video enables you to easily upload, browse, and embed videos from your Gumlet account directly within WordPress. Enjoy advanced dynamic watermarking, robust player customization, powerful user analytics, and seamless video embedding—everything you need for secure, modern video delivery.**
 >
-> * Automate your video security using dynamic watermark support
-> * Select specific user data such as name, email, id to show as the dynamic watermark
-> * Use shortcode to embed videos quickly
-> * Add videos using gutenberg block
-> * Responsive video embeds or use custom dimensions
-> * CDN delivery by AWS CloudFront (215+ locations)
-> * Track user level analytics for deeper insights
-> * Browse your Gumlet library, upload new videos, and see asset details from the block editor (requires a Gumlet API key in **Settings → Gumlet Video → API**; administrators only)
-> * Gumlet uses play.gumlet.io domain for data transfer. This domain is owned by https://www.gumlet.com. Read [Privacy Policy](https://www.gumlet.com/privacy/) and [Terms of Service](https://www.gumlet.com/terms/)
+> * Instantly browse your Gumlet video library, upload new content, and view asset details from the block editor (requires a Gumlet API key via **Settings → Gumlet Video → API**; available to administrators only).
+> * Automatically enhance video security with dynamic watermarking.
+> * Choose to display specific user information (name, email, ID) as a visible, dynamic watermark on video playback.
+> * Use simple shortcodes to embed videos anywhere on your site.
+> * Add videos via a dedicated Gutenberg block for a native editing experience.
+> * Responsive video embeds by default, with options for custom dimensions.
+> * Ultra-fast CDN delivery powered by AWS CloudFront (215+ locations globally).
+> * Track detailed, user-level analytics to gain actionable insights on video engagement.
+> * All video playback and assets are served from the play.gumlet.io domain, owned and operated by [Gumlet](https://www.gumlet.com). For more information, see our [Privacy Policy](https://www.gumlet.com/privacy/) and [Terms of Service](https://www.gumlet.com/terms/).
 
-This is the plugin you will ever need for securing videos!
+Gumlet Video is the all-in-one solution for securely managing and delivering your WordPress video content!
 
 
 == Screenshots ==
