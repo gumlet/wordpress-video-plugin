@@ -25,6 +25,7 @@ class Gumlet_Video_Settings
         add_action('admin_init', [ $this, 'gumlet_register_settings' ]);
         add_action('admin_menu', [ $this, 'gumlet_add_options_link' ]);
         add_action('admin_init', [$this, "load_plugin_script_files"]);
+        add_action('admin_enqueue_scripts', [ $this, 'enqueue_settings_scripts' ]);
     }
 
     /**
@@ -55,9 +56,10 @@ class Gumlet_Video_Settings
     <form method="post" action="<?php echo esc_url(admin_url('options.php')); ?>">
 
         <?php settings_fields('gumlet_video_settings_group'); ?>
+        <input type="hidden" name="gumlet_api_key_clear" id="gumlet_api_key_clear" value="0" />
         <div class="mytabs">
-            <input type="radio" id="tabAdvanced" name="mytabs" checked>
-            <label for="tabAdvanced" class="mytablabel">Settings</label>
+            <input type="radio" id="tabGeneral" name="mytabs" checked>
+            <label for="tabGeneral" class="mytablabel"><?php esc_html_e('Settings', 'gumlet-video'); ?></label>
             <div class="tab">
                 <table class="form-table">
                     <tbody>
@@ -117,7 +119,58 @@ class Gumlet_Video_Settings
                     </tbody>
                 </table>
             </div>
-            
+
+            <input type="radio" id="tabApi" name="mytabs">
+            <label for="tabApi" class="mytablabel"><?php esc_html_e('API', 'gumlet-video'); ?></label>
+            <div class="tab">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <label for="gumlet_api_key"><?php esc_html_e('Gumlet API key', 'gumlet-video'); ?></label>
+                            </th>
+                            <td>
+                                <input
+                                    id="gumlet_api_key"
+                                    name="gumlet_api_key"
+                                    type="password"
+                                    class="regular-text"
+                                    value=""
+                                    autocomplete="off"
+                                    placeholder="<?php esc_attr_e('Paste your API key', 'gumlet-video'); ?>"
+                                />
+                                <?php if ( get_option( 'gumlet_api_key', '' ) !== '' ) : ?>
+                                <span style="margin-top: 10px;">
+                                    <button type="button" class="button button-secondary" id="gumlet-remove-api-key" aria-label="<?php esc_attr_e( 'Remove saved API key', 'gumlet-video' ); ?>">
+                                        <span class="dashicons dashicons-dismiss" style="vertical-align: text-top; margin-right: 4px;" aria-hidden="true"></span>
+                                        <?php esc_html_e( 'Remove key', 'gumlet-video' ); ?>
+                                    </button>
+                                </span>
+                                <?php endif; ?>
+                                <p class="help-text">
+                                    <?php esc_html_e('Required for browsing assets and uploading from the Gumlet Video block in the editor. The key is stored on your server and never exposed to visitors.', 'gumlet-video'); ?>
+                                    <a href="https://dash.gumlet.com/developer/api-keys" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Get your API key', 'gumlet-video'); ?></a>
+                                </p>
+                                <?php if ( get_option( 'gumlet_api_key', '' ) !== '' ) : ?>
+                                    <p class="description" style="margin-top: 4px;color: #258c25;"><?php esc_html_e('A key is already saved. Enter a new key to replace it, or leave blank to keep the current key.', 'gumlet-video'); ?></p>
+                                    
+                                <?php endif; ?>
+                                <p style="margin-top: 24px;">
+                                    <button type="button" class="button" id="gumlet-test-api"><?php esc_html_e('Test connection', 'gumlet-video'); ?></button>
+                                    <span id="gumlet-test-api-result" style="margin-left:8px;"></span>
+                                </p>
+                                <p class="description" style="margin-top: 4px; font-size: 12px;">
+                                    <?php esc_html_e('Test connection checks the key you typed above when the field is not empty; otherwise it uses the key already saved in the database.', 'gumlet-video'); ?>
+                                </p>
+                                <p class="description" style="margin-top: 2px; font-size: 12px;">
+                                    <?php esc_html_e('You do not need to save first to try a new key. You can test the key by clicking the "Test connection" button.', 'gumlet-video'); ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         <input type="submit" class="button-primary" value="<?php esc_html_e('Save Options', 'gumlet-video'); ?>" />
 
@@ -172,8 +225,123 @@ class Gumlet_Video_Settings
             }
             return 0;
         });
+
+        register_setting(
+            'gumlet_video_settings_group',
+            'gumlet_api_key',
+            array(
+                'type'              => 'string',
+                'sanitize_callback' => array( $this, 'sanitize_api_key' ),
+                'default'           => '',
+            )
+        );
     }
 
+    /**
+     * Keep existing API key when the password field is left blank on save.
+     *
+     * @param mixed $input Raw option value.
+     * @return string
+     */
+    public function sanitize_api_key( $input ) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- options.php verifies settings_fields nonce before save.
+        if ( isset( $_POST['gumlet_api_key_clear'] ) && '1' === sanitize_text_field( wp_unslash( $_POST['gumlet_api_key_clear'] ) ) ) {
+            if ( class_exists( 'Gumlet_API_Client' ) ) {
+                Gumlet_API_Client::clear_workspace_cache();
+            }
+            return '';
+        }
+        $input = is_string( $input ) ? trim( $input ) : '';
+        if ( '' === $input ) {
+            return (string) get_option( 'gumlet_api_key', '' );
+        }
+        if ( class_exists( 'Gumlet_API_Client' ) ) {
+            Gumlet_API_Client::clear_workspace_cache();
+        }
+        return sanitize_text_field( $input );
+    }
+
+    /**
+     * Scripts for settings page (Test connection).
+     *
+     * @param string $hook_suffix Current admin page.
+     */
+    public function enqueue_settings_scripts( $hook_suffix ) {
+        if ( 'settings_page_gumlet-video-options' !== $hook_suffix ) {
+            return;
+        }
+        wp_enqueue_style( 'dashicons' );
+        wp_register_script(
+            'gumlet-video-settings',
+            false,
+            array(),
+            defined( 'GUMLET_PLUGIN_VERSION' ) ? GUMLET_PLUGIN_VERSION : '1.3.0',
+            true
+        );
+        wp_enqueue_script( 'gumlet-video-settings' );
+        wp_localize_script(
+            'gumlet-video-settings',
+            'gumletVideoSettings',
+            array(
+                'restUrl'       => esc_url_raw( rest_url( 'gumlet-video/v1/' ) ),
+                'nonce'         => wp_create_nonce( 'wp_rest' ),
+                'removeConfirm' => __( 'Remove the saved Gumlet API key? Library browse and uploads in the editor will stop working until you save a new key.', 'gumlet-video' ),
+            )
+        );
+        $inline = <<<'JS'
+(function() {
+  var btn = document.getElementById('gumlet-test-api');
+  var out = document.getElementById('gumlet-test-api-result');
+  var keyInput = document.getElementById('gumlet_api_key');
+  var removeBtn = document.getElementById('gumlet-remove-api-key');
+  var clearFlag = document.getElementById('gumlet_api_key_clear');
+  if (removeBtn && clearFlag && typeof gumletVideoSettings !== 'undefined' && gumletVideoSettings.removeConfirm) {
+    removeBtn.addEventListener('click', function() {
+      if (!window.confirm(gumletVideoSettings.removeConfirm)) return;
+      clearFlag.value = '1';
+      if (keyInput) keyInput.value = '';
+      var f = clearFlag.form;
+      if (f) f.submit();
+    });
+  }
+  if (!btn || !out || typeof gumletVideoSettings === 'undefined') return;
+  btn.addEventListener('click', function() {
+    out.textContent = '';
+    btn.disabled = true;
+    var payload = {};
+    if (keyInput && keyInput.value && String(keyInput.value).trim() !== '') {
+      payload.api_key = String(keyInput.value).trim();
+    }
+    fetch(gumletVideoSettings.restUrl + 'test-connection', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': gumletVideoSettings.nonce
+      },
+      body: JSON.stringify(payload)
+    }).then(function(r) {
+      return r.json().then(function(data) {
+        if (!r.ok) {
+          var msg = (data && data.message) ? data.message : r.statusText;
+          out.style.color = '#b32d2e';
+          out.textContent = msg;
+          return;
+        }
+        out.style.color = '#008a20';
+        out.textContent = data.message || 'OK';
+      });
+    }).catch(function() {
+      out.style.color = '#b32d2e';
+      out.textContent = 'Request failed';
+    }).finally(function() {
+      btn.disabled = false;
+    });
+  });
+})();
+JS;
+        wp_add_inline_script( 'gumlet-video-settings', $inline );
+    }
 
     public function load_plugin_script_files(){
         wp_register_style('admin_tabs', esc_url(plugins_url('includes/assets/css/tabs.css', __DIR__)), false, '1.0.5');

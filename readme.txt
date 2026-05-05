@@ -6,7 +6,7 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -24,6 +24,7 @@ An official plugin by Gumlet for video embedding, dynamic watermark configuratio
 > * Responsive video embeds or use custom dimensions
 > * CDN delivery by AWS CloudFront (215+ locations)
 > * Track user level analytics for deeper insights
+> * Browse your Gumlet library, upload new videos, and see asset details from the block editor (requires a Gumlet API key in **Settings → Gumlet Video → API**; administrators only)
 > * Gumlet uses play.gumlet.io domain for data transfer. This domain is owned by https://www.gumlet.com. Read [Privacy Policy](https://www.gumlet.com/privacy/) and [Terms of Service](https://www.gumlet.com/terms/)
 
 This is the plugin you will ever need for securing videos!
@@ -31,12 +32,14 @@ This is the plugin you will ever need for securing videos!
 
 == Screenshots ==
 
-1. WordPress settings panel
-2. Gumlet Player customisation panel
-3. How does it work?
-4. Shortcode usage
-5. Gutenberg block usage
-6. Block editor usage
+1. Gumlet Video Library inside WordPress Media
+2. Usage of Gumlet Video inside Editor
+3. Gumlet Video Plugin settings
+4. API Key and Connection Test
+5. File Upload directly to Gumlet
+6. Gumlet dashboard settings for dynamic watermark
+7. How does it work?
+8. Shortcode usage
 
 == Installation Guide for Dynamic Watermark ==
 
@@ -54,6 +57,16 @@ This is the plugin you will ever need for securing videos!
 
 7. Embed videos directly with Gutenberg block
 
+= API key (library & upload) =
+
+1. Open your [Gumlet account API access](https://dash.gumlet.com/developer/api-keys) and create an API key.
+
+2. In WordPress go to **Settings → Gumlet Video** and open the **API** tab. Paste the key and save. Use **Test connection** to verify.
+
+3. In the **Gumlet Video** block, use **Browse library** to pick a video, or **Upload video file** to send a file directly to Gumlet (the file uploads from your browser to Gumlet; it is not stored in your Media Library). You can still paste an Asset ID manually.
+
+4. Only users with the **Administrator** role can use these features; the key never leaves your server except for server-to-server calls to Gumlet.
+
 
 
 = Get in touch! =
@@ -69,6 +82,10 @@ Still not sure? Come chat with us, we will honestly help you make the right choi
 
 == Frequently Asked Questions ==
 
+= Can I upload videos to my Gumlet account from WordPress? =
+
+Yes, you can upload files to your Gumlet workspace within WordPress. You can also browse existing videos and embed them within WordPress.
+
 = Can I use email and name in the dynamic watermark? =
 
 Yes, you can use name, email and user_id in a combination as per your need.
@@ -77,7 +94,17 @@ Yes, you can use name, email and user_id in a combination as per your need.
 
 Gumlet Video plugin is free to use. However, to use the dynamic watermark on your videos, you would need a Business plan. Learn more about plans [here](https://www.gumlet.com/pricing/?tab=video)
 
+= Why can't editors use Browse library / Upload? =
+
+Those actions call the Gumlet API through WordPress. Only users who can **manage_options** (typically Administrators) are allowed to use the proxy by design, so the API key stays limited to trusted roles.
+
 == Changelog ==
+
+= 1.3.0 =
+* Added Gumlet API integration: server-side REST proxy (`/wp-json/gumlet-video/v1/*`), Settings → API tab for storing the API key and testing the connection
+* Gutenberg block: Browse library (workspace/search), direct upload to Gumlet, and asset metadata preview (thumbnail, title, duration, status)
+* Gumlet Video Library: Browse library (workspace/search), direct upload to Gumlet, and asset metadata preview (thumbnail, title, duration, status)
+* Plugin version bump to 1.3.0
 
 = 1.2.1 =
 * Added support for latest WP versions
