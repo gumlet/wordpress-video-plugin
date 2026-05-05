@@ -33,7 +33,7 @@ export default function LibraryModal( {
 	const [ loading, setLoading ] = useState( false );
 	const [ loadingMore, setLoadingMore ] = useState( false );
 	const [ error, setError ] = useState( null );
-	const pageSize = 32;
+	const pageSize = 40;
 
 	useEffect( () => {
 		const t = setTimeout( () => {
@@ -93,8 +93,6 @@ export default function LibraryModal( {
 				const q = {
 					offset: '0',
 					size: String( pageSize ),
-					sortBy: 'created_at',
-					orderBy: 'desc',
 				};
 				if ( searchDebounced ) {
 					q.title = searchDebounced;
@@ -135,8 +133,6 @@ export default function LibraryModal( {
 			const q = {
 				offset: String( assets.length ),
 				size: String( pageSize ),
-				sortBy: 'created_at',
-				orderBy: 'desc',
 			};
 			if ( searchDebounced ) {
 				q.title = searchDebounced;

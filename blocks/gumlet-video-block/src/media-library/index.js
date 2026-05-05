@@ -53,7 +53,7 @@ function newPostWithAssetUrl( assetId ) {
 }
 
 function MediaLibraryApp() {
-	const pageSize = 32;
+	const pageSize = 40;
 	const [ workspaces, setWorkspaces ] = useState( [] );
 	const [ workspaceId, setWorkspaceId ] = useState( '' );
 	const [ search, setSearch ] = useState( '' );
@@ -119,8 +119,6 @@ function MediaLibraryApp() {
 				const q = {
 					offset: '0',
 					size: String( pageSize ),
-					sortBy: 'created_at',
-					orderBy: 'desc',
 				};
 				if ( searchDebounced ) {
 					q.title = searchDebounced;
@@ -162,8 +160,6 @@ function MediaLibraryApp() {
 			const q = {
 				offset: String( assets.length ),
 				size: String( pageSize ),
-				sortBy: 'created_at',
-				orderBy: 'desc',
 			};
 			if ( searchDebounced ) {
 				q.title = searchDebounced;
@@ -198,8 +194,6 @@ function MediaLibraryApp() {
 			const q = {
 				offset: '0',
 				size: String( pageSize ),
-				sortBy: 'created_at',
-				orderBy: 'desc',
 			};
 			if ( searchDebounced ) {
 				q.title = searchDebounced;

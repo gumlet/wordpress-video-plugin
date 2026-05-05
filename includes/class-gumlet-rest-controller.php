@@ -56,18 +56,25 @@ class Gumlet_REST_Controller {
 				'permission_callback' => array( __CLASS__, 'permission_manage_options' ),
 				'args'                => array(
 					'workspace_id' => array(
-						'description' => __( 'Gumlet workspace / collection ID.', 'gumlet-video' ),
-						'type'        => 'string',
-						'required'    => true,
+						'description'       => __( 'Gumlet workspace / collection ID.', 'gumlet-video' ),
+						'type'              => 'string',
+						'required'          => true,
+						'sanitize_callback' => 'sanitize_text_field',
 					),
-					'title'        => array( 'type' => 'string' ),
-					'status'       => array( 'type' => 'string' ),
-					'tag'          => array( 'type' => 'string' ),
-					'offset'       => array( 'type' => 'string', 'default' => '0' ),
-					'size'         => array( 'type' => 'string', 'default' => '32' ),
-					'sortBy'       => array( 'type' => 'string' ),
-					'orderBy'      => array( 'type' => 'string' ),
-					'type'         => array( 'type' => 'string' ),
+					'title'        => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'offset'       => array(
+						'type'              => 'integer',
+						'default'           => 0,
+						'sanitize_callback' => 'absint',
+					),
+					'size'         => array(
+						'type'              => 'integer',
+						'default'           => 40,
+						'sanitize_callback' => 'absint',
+					),
 				),
 			)
 		);
@@ -132,19 +139,25 @@ class Gumlet_REST_Controller {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public static function list_assets( $request ) {
-		$workspace_id = $request->get_param( 'workspace_id' );
-		$query        = ['status' => 'downloading,queued,processing,ready,generating-subtitles,pre-processing,processed,validated,validating'];
-		foreach ( array( 'title', 'offset', 'size', 'sortBy', 'orderBy', 'type', 'playlist_id' ) as $key ) {
-			$val = $request->get_param( $key );
-			if ( null !== $val && '' !== $val ) {
-				$query[ $key ] = $val;
-			}
+		$workspace_id = sanitize_text_field( (string) $request->get_param( 'workspace_id' ) );
+
+		$size = absint( $request->get_param( 'size' ) );
+		if ( $size < 1 ) {
+			$size = 40;
 		}
-		if ( ! isset( $query['offset'] ) ) {
-			$query['offset'] = '0';
-		}
-		if ( ! isset( $query['size'] ) ) {
-			$query['size'] = '32';
+
+		$query = array(
+			// Curated set of statuses we want to surface in WordPress admin UIs.
+			'status'  => 'downloading,queued,processing,ready,generating-subtitles,pre-processing,processed,validated,validating',
+			'offset'  => (string) absint( $request->get_param( 'offset' ) ),
+			'size'    => (string) $size,
+			'sortBy'  => 'updated_at',
+			'orderBy' => 'desc',
+		);
+
+		$title = $request->get_param( 'title' );
+		if ( is_string( $title ) && '' !== $title ) {
+			$query['title'] = sanitize_text_field( $title );
 		}
 
 		$result = Gumlet_API_Client::list_assets( $workspace_id, $query );

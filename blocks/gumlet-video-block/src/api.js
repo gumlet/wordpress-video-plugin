@@ -18,7 +18,7 @@ export async function listWorkspaces( refresh = false ) {
  * Build path + query for GET assets list.
  *
  * @param {string} workspaceId
- * @param {Record<string, string>} query title, offset, size, sortBy, orderBy, status, type
+ * @param {Record<string, string>} query title, offset, size
  * @return {string}
  */
 export function buildAssetListPath( workspaceId, query = {} ) {
@@ -26,18 +26,14 @@ export function buildAssetListPath( workspaceId, query = {} ) {
 		workspace_id: workspaceId,
 		...( query.title ? { title: query.title } : {} ),
 		offset: query.offset !== undefined ? String( query.offset ) : '0',
-		size: query.size !== undefined ? String( query.size ) : '32',
-		...( query.sortBy ? { sortBy: query.sortBy } : {} ),
-		...( query.orderBy ? { orderBy: query.orderBy } : {} ),
-		...( query.status ? { status: query.status } : {} ),
-		...( query.type ? { type: query.type } : {} ),
+		size: query.size !== undefined ? String( query.size ) : '40',
 	} );
 	return `${ REST_NS }/assets?${ params.toString() }`;
 }
 
 /**
  * @param {string} workspaceId
- * @param {Record<string, string>} query title, offset, size, sortBy, orderBy, status, type
+ * @param {Record<string, string>} query title, offset, size
  */
 export async function listAssets( workspaceId, query = {} ) {
 	return apiFetch( { path: buildAssetListPath( workspaceId, query ) } );
