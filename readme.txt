@@ -6,7 +6,7 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -99,6 +99,9 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 Those actions call the Gumlet API through WordPress. Only users who can **manage_options** (typically Administrators) are allowed to use the proxy by design, so the API key stays limited to trusted roles.
 
 == Changelog ==
+= 1.4.1 =
+* Fix vulnerabilities
+
 = 1.4.0 =
 * Gumlet Video tab in the native WordPress media modal: browse your Gumlet library, upload video or audio, and insert a Gumlet Video block from the block editor (requires API key; administrators only)
 * Outside the block editor, selecting an asset offers a link to start a new post with that video

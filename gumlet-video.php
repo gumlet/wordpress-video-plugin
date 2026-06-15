@@ -15,7 +15,7 @@ if ( ! defined( 'GUMLET_VIDEO_PLUGIN_URL' ) ) {
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
  * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
  * Text Domain:       gumlet-video
@@ -35,7 +35,7 @@ Gumlet_Media_Library_Admin::init();
 Gumlet_Media_Modal::init();
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
-    define('GUMLET_PLUGIN_VERSION', '1.4.0');
+    define('GUMLET_PLUGIN_VERSION', '1.4.1');
 }
 
 function gumlet_oembed_provider() {
