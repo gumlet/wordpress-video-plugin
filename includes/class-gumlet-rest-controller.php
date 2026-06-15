@@ -103,6 +103,29 @@ class Gumlet_REST_Controller {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( __CLASS__, 'create_upload' ),
 				'permission_callback' => array( __CLASS__, 'permission_manage_options' ),
+				'args'                => array(
+					'workspace_id' => array(
+						'description'       => __( 'Gumlet workspace / collection ID.', 'gumlet-video' ),
+						'type'              => 'string',
+						'required'          => true,
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'title'        => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'description'  => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_textarea_field',
+					),
+					'playlist_id'  => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'tag'          => array(
+						'type' => array( 'string', 'array' ),
+					),
+				),
 			)
 		);
 
@@ -207,14 +230,8 @@ class Gumlet_REST_Controller {
 		$body = array(
 			'workspace_id' => $workspace_id,
 			'title'        => $title,
+			'metadata'     => self::build_upload_metadata(),
 		);
-
-		if ( ! empty( $params['collection_id'] ) ) {
-			$body['collection_id'] = sanitize_text_field( wp_unslash( $params['collection_id'] ) );
-		}
-		if ( ! empty( $params['format'] ) ) {
-			$body['format'] = sanitize_text_field( wp_unslash( $params['format'] ) );
-		}
 		if ( ! empty( $params['tag'] ) && is_array( $params['tag'] ) ) {
 			$body['tag'] = array_map( 'sanitize_text_field', wp_unslash( $params['tag'] ) );
 		} elseif ( ! empty( $params['tag'] ) && is_string( $params['tag'] ) ) {
@@ -226,7 +243,6 @@ class Gumlet_REST_Controller {
 		if ( ! empty( $params['playlist_id'] ) ) {
 			$body['playlist_id'] = sanitize_text_field( wp_unslash( $params['playlist_id'] ) );
 		}
-
 		$result = Gumlet_API_Client::create_direct_upload( $body );
 		if ( is_wp_error( $result ) ) {
 			return self::error_response( $result );
@@ -261,6 +277,28 @@ class Gumlet_REST_Controller {
 				'message' => __( 'Connected to Gumlet successfully.', 'gumlet-video' ),
 			)
 		);
+	}
+
+	/**
+	 * Metadata attached to every WordPress-originated Gumlet upload.
+	 *
+	 * @return array<string, string>
+	 */
+	protected static function build_upload_metadata() {
+		$metadata = array(
+			'source_platform' => 'wordpress',
+		);
+
+		if ( defined( 'GUMLET_PLUGIN_VERSION' ) ) {
+			$metadata['plugin_version'] = sanitize_text_field( GUMLET_PLUGIN_VERSION );
+		}
+
+		$site_url = home_url( '/', 'https' );
+		if ( is_string( $site_url ) && '' !== $site_url ) {
+			$metadata['site_url'] = esc_url_raw( $site_url );
+		}
+
+		return array_filter( $metadata );
 	}
 
 	/**

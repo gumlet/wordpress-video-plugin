@@ -11,5 +11,11 @@ module.exports = {
 			'media-library',
 			'index.js'
 		),
+		'media-modal': path.resolve(
+			process.cwd(),
+			'src',
+			'media-modal',
+			'index.js'
+		),
 	},
 };

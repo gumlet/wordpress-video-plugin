@@ -6,7 +6,7 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -15,7 +15,7 @@ Official Gumlet plugin: embed and upload video with a block or shortcodes, plus 
 
 == Description ==
 
-> **Gumlet Video enables you to easily upload, browse, and embed videos from your Gumlet account directly within WordPress. Enjoy advanced dynamic watermarking, robust player customization, powerful user analytics, and seamless video embedding—everything you need for secure, modern video delivery.**
+**Gumlet Video enables you to easily upload, browse, and embed videos from your Gumlet account directly within WordPress. Enjoy advanced dynamic watermarking, robust player customization, powerful user analytics, and seamless video embedding - everything you need for secure, modern video delivery.**
 >
 > * Instantly browse your Gumlet video library, upload new content, and view asset details from the block editor (requires a Gumlet API key via **Settings → Gumlet Video → API**; available to administrators only).
 > * Automatically enhance video security with dynamic watermarking.
@@ -99,6 +99,10 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 Those actions call the Gumlet API through WordPress. Only users who can **manage_options** (typically Administrators) are allowed to use the proxy by design, so the API key stays limited to trusted roles.
 
 == Changelog ==
+= 1.4.0 =
+* Gumlet Video tab in the native WordPress media modal: browse your Gumlet library, upload video or audio, and insert a Gumlet Video block from the block editor (requires API key; administrators only)
+* Outside the block editor, selecting an asset offers a link to start a new post with that video
+* Gumlet API error details are only included in REST responses when `WP_DEBUG` is enabled
 
 = 1.3.0 =
 * Added Gumlet API integration: server-side REST proxy (`/wp-json/gumlet-video/v1/*`), Settings → API tab for storing the API key and testing the connection

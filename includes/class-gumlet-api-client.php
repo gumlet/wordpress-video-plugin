@@ -124,7 +124,11 @@ class Gumlet_API_Client {
 			if ( is_array( $data ) && isset( $data['error']['code'] ) ) {
 				$err_code = sanitize_key( $data['error']['code'] );
 			}
-			return new WP_Error( $err_code, $message, array( 'status' => $code, 'body' => $data ) );
+			$error_data = array( 'status' => $code );
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && is_array( $data ) ) {
+				$error_data['body'] = $data;
+			}
+			return new WP_Error( $err_code, $message, $error_data );
 		}
 
 		return is_array( $data ) ? $data : array();

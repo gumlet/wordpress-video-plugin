@@ -275,7 +275,7 @@ class Gumlet_Video_Settings
             'gumlet-video-settings',
             false,
             array(),
-            defined( 'GUMLET_PLUGIN_VERSION' ) ? GUMLET_PLUGIN_VERSION : '1.3.0',
+            defined( 'GUMLET_PLUGIN_VERSION' ) ? GUMLET_PLUGIN_VERSION : '1.4.0',
             true
         );
         wp_enqueue_script( 'gumlet-video-settings' );
