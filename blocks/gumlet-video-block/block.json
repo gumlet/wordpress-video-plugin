@@ -1,18 +1,19 @@
 {
     "apiVersion": 3,
     "name": "gumlet/gumlet-video-block",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "title": "Gumlet Video",
     "icon": {
         "src": "gumlet-icon"
     },
     "description": "Embed a Gumlet video by providing an asset ID, width, and height.",
     "keywords": [ "gumlet", "video", "embed" ],
-    "textdomain": "gumlet-video-block",
+    "textdomain": "gumlet-video",
     "attributes": {
       "id": {
         "type": "string",
-        "default": ""
+        "default": "",
+        "role": "content"
       },
       "width": {
         "type": "string",

@@ -15,7 +15,7 @@ if ( ! defined( 'GUMLET_VIDEO_PLUGIN_URL' ) ) {
  * Plugin Name:       Gumlet Video
  * Description:       Video Hosting Plugin for WordPress
  * Plugin URI:        https://github.com/gumlet/wordpress-video-plugin
- * Version:           1.4.1
+ * Version:           1.4.2
  * Author:            Gumlet
  * Author URI:        https://www.gumlet.com
  * Text Domain:       gumlet-video
@@ -35,7 +35,7 @@ Gumlet_Media_Library_Admin::init();
 Gumlet_Media_Modal::init();
 
 if (!defined('GUMLET_PLUGIN_VERSION')) {
-    define('GUMLET_PLUGIN_VERSION', '1.4.1');
+    define('GUMLET_PLUGIN_VERSION', '1.4.2');
 }
 
 function gumlet_oembed_provider() {
@@ -73,16 +73,14 @@ function gumlet_video_shortcode($atts)
     $audio_track_language = esc_attr($sc_args['audio_track_language']);
     $caption_language = esc_attr($sc_args['caption_language']);
 
-    if (!$atts['id']) {
+    if ( empty( $atts['id'] ) ) {
         return "Required argument id for embedded video not found.";
-    } else {
-        $video = $id;
     }
-    
+    $video = $id;
+
     $watermark_text = '';
-    $logged_in = is_user_logged_in();
-    if($annotate && $logged_in) {
-        $current_user = wp_get_current_user();
+    $current_user   = is_user_logged_in() ? wp_get_current_user() : null;
+    if ( $annotate && $current_user ) {
         if(isset($watermark['dynamic_watermark_name']) && $watermark['dynamic_watermark_name']) {
             $watermark_text .= $current_user->display_name . " ";
         }
@@ -94,7 +92,7 @@ function gumlet_video_shortcode($atts)
         }
     }
     $analytics_text = '';
-    if($user_analytics && $logged_in) {
+    if ( $user_analytics && $current_user ) {
         $analytics_text = 'gm_user_id='.$current_user->ID.
                             '&gm_user_name='. urlencode($current_user->display_name).
                             '&gm_user_email='.$current_user->user_email;
