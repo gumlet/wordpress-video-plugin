@@ -6,7 +6,7 @@ Text Domain: gumlet-video
 Author URI: https://www.gumlet.com
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 Requires PHP: 7.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -99,6 +99,9 @@ Gumlet Video plugin is free to use. However, to use the dynamic watermark on you
 Those actions call the Gumlet API through WordPress. Only users who can **manage_options** (typically Administrators) are allowed to use the proxy by design, so the API key stays limited to trusted roles.
 
 == Changelog ==
+= 1.4.3 =
+* Added Compatibility for LifterLMS
+
 = 1.4.2 =
 * Compatibility updates for WordPress 7.0 / 7.1
 * Fix PHP 8 warnings when analytics is enabled without watermarking, or when a shortcode has no asset ID
