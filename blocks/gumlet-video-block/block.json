@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "gumlet/gumlet-video-block",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "title": "Gumlet Video",
     "icon": {
         "src": "gumlet-icon"

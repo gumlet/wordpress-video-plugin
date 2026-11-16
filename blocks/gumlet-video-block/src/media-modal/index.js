@@ -13,6 +13,7 @@ const TAB_PRIORITY = 35;
 const frameRoots = new WeakMap();
 
 let patched = false;
+let GumletContentView = null;
 
 /**
  * @param {object} frame wp.media frame.
@@ -26,36 +27,79 @@ function unmountFrameRoot( frame ) {
 }
 
 /**
- * @param {object} frame wp.media frame.
+ * Backbone view for the Gumlet content pane. Mount React only after WP
+ * has attached this view (ready / content:activate), not during create/render.
+ *
+ * @return {Function|null}
  */
-function renderGumletTab( frame ) {
-	unmountFrameRoot( frame );
+function getGumletContentView() {
+	if ( GumletContentView ) {
+		return GumletContentView;
+	}
+	if ( ! window.wp?.media?.View ) {
+		return null;
+	}
 
-	const GumletContent = wp.Backbone.View.extend( {
+	GumletContentView = wp.media.View.extend( {
 		tagName: 'div',
-		className: 'gumlet-media-modal-tab attachments-browser',
+		className: 'gumlet-media-modal-tab',
 		render() {
-			this.el.innerHTML = '<div class="gumlet-media-modal-mount"></div>';
+			this.$el.html(
+				'<div class="gumlet-media-modal-mount"></div>'
+			);
 			return this;
+		},
+		ready() {
+			mountReactOnView( this, this.controller );
+		},
+		remove() {
+			unmountFrameRoot( this.controller );
+			return wp.media.View.prototype.remove.apply( this, arguments );
 		},
 	} );
 
-	const view = new GumletContent();
-	frame.content.set( view );
+	return GumletContentView;
+}
 
-	const mountNode = view.el.querySelector( '.gumlet-media-modal-mount' );
-	if ( ! mountNode ) {
+/**
+ * Create the React tree once the mount node is in the document.
+ *
+ * @param {object} view Backbone view.
+ * @param {object} frame wp.media frame.
+ */
+function mountReactOnView( view, frame ) {
+	if ( ! view?.el || ! frame ) {
 		return;
 	}
 
-	const root = createRoot( mountNode );
-	frameRoots.set( frame, root );
+	window.requestAnimationFrame( () => {
+		if ( frame.content?.mode() !== TAB_ID ) {
+			return;
+		}
 
-	root.render(
-		<GumletTabPanel
-			onAssetChosen={ ( assetId ) => onAssetChosen( assetId, frame ) }
-		/>
-	);
+		let mountNode = view.el.querySelector( '.gumlet-media-modal-mount' );
+		if ( ! mountNode ) {
+			view.render();
+			mountNode = view.el.querySelector( '.gumlet-media-modal-mount' );
+		}
+		if ( ! mountNode ) {
+			return;
+		}
+
+		if ( frameRoots.has( frame ) && mountNode.childElementCount > 0 ) {
+			return;
+		}
+
+		unmountFrameRoot( frame );
+
+		const root = createRoot( mountNode );
+		frameRoots.set( frame, root );
+		root.render(
+			<GumletTabPanel
+				onAssetChosen={ ( assetId ) => onAssetChosen( assetId, frame ) }
+			/>
+		);
+	} );
 }
 
 /**
@@ -69,27 +113,29 @@ function bindFrameInstance( frame ) {
 	}
 	frame.__gumletTabBound = true;
 
-	frame.states.add( [
-		new wp.media.controller.State( {
-			id: TAB_ID,
-			title: __( 'Gumlet Video', 'gumlet-video' ),
-			priority: TAB_PRIORITY,
-		} ),
-	] );
+	const ViewClass = getGumletContentView();
+	if ( ! ViewClass ) {
+		frame.__gumletTabBound = false;
+		return;
+	}
 
-	frame.on( 'content:render:' + TAB_ID, () => {
-		renderGumletTab( frame );
+	frame.on( 'content:create:' + TAB_ID, ( region ) => {
+		region.view = new ViewClass( { controller: frame } );
+	} );
+
+	frame.on( 'content:activate:' + TAB_ID, () => {
+		const view = frame.content?.get();
+		if ( view ) {
+			mountReactOnView( view, frame );
+		}
+	} );
+
+	frame.on( 'content:deactivate:' + TAB_ID, () => {
+		unmountFrameRoot( frame );
 	} );
 
 	frame.on( 'close', () => {
 		unmountFrameRoot( frame );
-	} );
-
-	frame.on( 'content:render', () => {
-		const mode = frame.content.mode();
-		if ( mode && mode !== TAB_ID ) {
-			unmountFrameRoot( frame );
-		}
 	} );
 }
 

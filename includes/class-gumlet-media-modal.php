@@ -67,7 +67,6 @@ class Gumlet_Media_Modal {
 			array(
 				'media-models',
 				'media-views',
-				'wp-edit-post',
 			)
 		);
 
@@ -80,6 +79,10 @@ class Gumlet_Media_Modal {
 		);
 
 		wp_enqueue_style( 'wp-components' );
+		wp_add_inline_style(
+			'wp-components',
+			'.gumlet-media-modal-tab{position:absolute;inset:0;overflow:auto;background:#fff;}'
+		);
 
 		wp_localize_script(
 			'gumlet-media-modal',
